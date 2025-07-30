@@ -1,28 +1,26 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize, Settings, SkipBack, SkipForward } from 'lucide-react';
+import { useLearningProgress } from '@/contexts/LearningProgressContext';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface BunnyVideoPlayerProps {
-  src: string;
-  poster?: string;
+  videoUrl: string;
+  lessonId?: string;
   title?: string;
-  onProgress?: (currentTime: number, duration: number) => void;
-  onEnded?: () => void;
   autoPlay?: boolean;
-  className?: string;
+  onProgress?: (currentTime: number, duration: number) => void;
 }
 
-export const BunnyVideoPlayer: React.FC<BunnyVideoPlayerProps> = ({
-  src,
-  poster,
-  title,
-  onProgress,
-  onEnded,
+export const BunnyVideoPlayer: React.FC<BunnyVideoPlayerProps> = ({ 
+  videoUrl, 
+  lessonId,
+  title, 
   autoPlay = false,
-  className = ''
+  onProgress 
 }) => {
+  const { updateVideoProgress, getLessonProgress } = useLearningProgress();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -33,7 +31,10 @@ export const BunnyVideoPlayer: React.FC<BunnyVideoPlayerProps> = ({
   const [showControls, setShowControls] = useState(true);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [quality, setQuality] = useState('auto');
-  const [buffered, setBuffered] = useState(0);
+  const [lastProgressUpdate, setLastProgressUpdate] = useState(0);
+  
+  // Get initial progress from context
+  const lessonProgress = lessonId ? getLessonProgress(lessonId) : null;
   
   const controlsTimeoutRef = useRef<NodeJS.Timeout>();
 
@@ -50,18 +51,26 @@ export const BunnyVideoPlayer: React.FC<BunnyVideoPlayerProps> = ({
       const total = video.duration;
       setCurrentTime(current);
       
-      // Update buffered progress
-      if (video.buffered.length > 0) {
-        const bufferedEnd = video.buffered.end(video.buffered.length - 1);
-        setBuffered((bufferedEnd / total) * 100);
+      if (total > 0) {
+        const progressPercent = (current / total) * 100;
+        
+        // Update progress in context every 30 seconds or on significant progress jumps
+        if (lessonId && (current - lastProgressUpdate > 30 || progressPercent - (lessonProgress?.watchedPercentage || 0) > 5)) {
+          updateVideoProgress(lessonId, progressPercent);
+          setLastProgressUpdate(current);
+        }
+        
+        // Call external progress callback
+        onProgress?.(current, total);
       }
-      
-      onProgress?.(current, total);
     };
 
     const handleEnded = () => {
       setIsPlaying(false);
-      onEnded?.();
+      // Mark lesson as complete when video ends
+      if (lessonId) {
+        updateVideoProgress(lessonId, 100);
+      }
     };
 
     const handlePlay = () => setIsPlaying(true);
@@ -73,14 +82,30 @@ export const BunnyVideoPlayer: React.FC<BunnyVideoPlayerProps> = ({
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
 
+    // Set initial progress if available
+    if (lessonProgress?.watchedPercentage && lessonProgress.watchedPercentage > 0) {
+      video.addEventListener('loadedmetadata', () => {
+        const resumeTime = (lessonProgress.watchedPercentage / 100) * video.duration;
+        if (resumeTime > 10) { // Only resume if more than 10 seconds
+          video.currentTime = resumeTime;
+        }
+      });
+    }
+
     return () => {
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
       video.removeEventListener('timeupdate', handleTimeUpdate);
       video.removeEventListener('ended', handleEnded);
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
+      
+      // Save final progress when component unmounts
+      if (lessonId && video.currentTime > 0 && video.duration > 0) {
+        const finalProgress = (video.currentTime / video.duration) * 100;
+        updateVideoProgress(lessonId, finalProgress);
+      }
     };
-  }, [onProgress, onEnded]);
+  }, [videoUrl, lessonId, lastProgressUpdate, lessonProgress]);
 
   const togglePlay = () => {
     const video = videoRef.current;
@@ -180,30 +205,17 @@ export const BunnyVideoPlayer: React.FC<BunnyVideoPlayerProps> = ({
 
   return (
     <div 
-      className={`relative bg-black rounded-lg overflow-hidden group ${className}`}
+      className="relative bg-black rounded-lg overflow-hidden group aspect-video"
       onMouseMove={handleMouseMove}
       onMouseLeave={() => isPlaying && setShowControls(false)}
     >
       <video
         ref={videoRef}
-        src={src}
-        poster={poster}
+        src={videoUrl}
         autoPlay={autoPlay}
         className="w-full h-full object-contain"
         onClick={togglePlay}
       />
-
-      {/* Buffered Progress Bar */}
-      <div className="absolute bottom-16 left-0 right-0 h-1 bg-gray-600">
-        <div 
-          className="h-full bg-gray-400 transition-all duration-300"
-          style={{ width: `${buffered}%` }}
-        />
-        <div 
-          className="h-full bg-primary transition-all duration-300"
-          style={{ width: `${progressPercentage}%` }}
-        />
-      </div>
 
       {/* Controls Overlay */}
       <div 
