@@ -57,14 +57,16 @@ const Footer = () => {
             </div>
           </div>
           
-          {/* Admin Access - Hidden Button */}
-          <Link 
-            to="/admin/login" 
-            className="fixed bottom-4 left-4 w-3 h-3 opacity-10 hover:opacity-30 transition-opacity duration-300"
-            title="إدارة النظام"
-          >
-            <Settings className="w-3 h-3 text-muted-foreground" />
-          </Link>
+          {/* Admin Access - Small Button */}
+          <div className="absolute bottom-2 left-2">
+            <Link 
+              to="/admin/login" 
+              className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-muted/50 hover:bg-muted border border-border/30 transition-all duration-200 hover:scale-105"
+              title="لوحة تحكم المدير"
+            >
+              <Settings className="w-4 h-4 text-muted-foreground" />
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
