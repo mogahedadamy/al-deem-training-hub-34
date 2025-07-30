@@ -200,14 +200,14 @@ const Header = () => {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  onClick={() => navigate('/auth')}
+                  onClick={() => navigate('/auth-supabase')}
                   className="font-cairo hover:bg-primary/10"
                 >
                   <LogIn className="w-4 h-4 ml-2" />
                   تسجيل الدخول
                 </Button>
                 <Button 
-                  onClick={() => navigate('/auth')}
+                  onClick={() => navigate('/auth-supabase')}
                   className="bg-gradient-primary hover:shadow-glow transition-all duration-300 font-cairo"
                   size="sm"
                 >
@@ -333,7 +333,7 @@ const Header = () => {
                   <div className="space-y-2">
                     <Button 
                       className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300 font-cairo" 
-                      onClick={() => handleNavigation('/auth')}
+                      onClick={() => handleNavigation('/auth-supabase')}
                     >
                       <LogIn className="mr-2 h-4 w-4" />
                       تسجيل الدخول
@@ -341,7 +341,7 @@ const Header = () => {
                     <Button 
                       variant="outline" 
                       className="w-full border-primary/20 hover:border-primary font-cairo" 
-                      onClick={() => handleNavigation('/auth')}
+                      onClick={() => handleNavigation('/auth-supabase')}
                     >
                       إنشاء حساب
                     </Button>

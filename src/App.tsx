@@ -6,8 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LearningProvider } from "@/contexts/LearningContext";
 import { NotificationProvider } from "@/contexts/NotificationContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { SupabaseAuthProvider } from "@/contexts/SupabaseAuthContext";
 import { PaymentProvider } from "@/contexts/PaymentContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { SupabaseProtectedRoute } from "@/components/auth/SupabaseProtectedRoute";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CourseDetail from "./pages/CourseDetail";
@@ -20,7 +22,9 @@ import LoadTesting from "./pages/LoadTesting";
 import PaymentPage from "./pages/PaymentPage";
 import AdminPayments from "./pages/AdminPayments";
 import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
 import MyPayments from "./pages/MyPayments";
+import AuthSupabase from "./pages/AuthSupabase";
 import { AdminProtectedRoute } from "./components/admin/AdminProtectedRoute";
 import { NotificationManager } from "./components/notifications/NotificationManager";
 import ScrollToTop from "./components/ScrollToTop";
@@ -29,11 +33,12 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <PaymentProvider>
-        <NotificationProvider>
-          <LearningProvider>
-            <TooltipProvider>
+    <SupabaseAuthProvider>
+      <AuthProvider>
+        <PaymentProvider>
+          <NotificationProvider>
+            <LearningProvider>
+              <TooltipProvider>
           <Toaster />
           <Sonner />
           <BrowserRouter>
@@ -64,6 +69,22 @@ const App = () => (
                   <ProtectedRoute requireAuth={false}>
                     <AuthPage />
                   </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/auth-supabase" 
+                element={
+                  <SupabaseProtectedRoute requireAuth={false}>
+                    <AuthSupabase />
+                  </SupabaseProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/dashboard" 
+                element={
+                  <SupabaseProtectedRoute requiredRole="admin">
+                    <AdminDashboard />
+                  </SupabaseProtectedRoute>
                 } 
               />
               <Route 
@@ -123,10 +144,11 @@ const App = () => (
             </Routes>
           </BrowserRouter>
           </TooltipProvider>
-        </LearningProvider>
-      </NotificationProvider>
-    </PaymentProvider>
-  </AuthProvider>
+          </LearningProvider>
+        </NotificationProvider>
+      </PaymentProvider>
+    </AuthProvider>
+  </SupabaseAuthProvider>
 </QueryClientProvider>
 );
 
