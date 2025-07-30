@@ -39,10 +39,11 @@ import { courses } from '@/data/courses';
 import { formatPrice } from '@/utils/currency';
 import { mockUsers } from '@/data/users';
 import { User } from '@/types/course';
-import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 
 const AdminPayments = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const { state, verifyPayment, rejectPayment, getPendingTransactions } = usePayment();
   const [selectedTransaction, setSelectedTransaction] = useState<PaymentTransaction | null>(null);
   const [rejectionReason, setRejectionReason] = useState('');
@@ -82,7 +83,11 @@ const AdminPayments = () => {
 
   const handleRejectPayment = async (transactionId: string) => {
     if (!rejectionReason.trim()) {
-      toast.error('يرجى إدخال سبب الرفض');
+      toast({
+        title: "خطأ",
+        description: "يرجى إدخال سبب الرفض",
+        variant: "destructive",
+      });
       return;
     }
     
@@ -102,7 +107,10 @@ const AdminPayments = () => {
   const handleLogout = () => {
     localStorage.removeItem('admin_logged_in');
     localStorage.removeItem('admin_login_time');
-    toast.success('تم تسجيل الخروج بنجاح');
+    toast({
+      title: "نجح تسجيل الخروج",
+      description: "تم تسجيل الخروج بنجاح",
+    });
     navigate('/admin/login');
   };
 
@@ -114,7 +122,10 @@ const AdminPayments = () => {
     link.href = url;
     link.download = `payment-transactions-${new Date().toISOString().split('T')[0]}.json`;
     link.click();
-    toast.success('تم تصدير البيانات بنجاح');
+    toast({
+      title: "نجح التصدير",
+      description: "تم تصدير البيانات بنجاح",
+    });
   };
 
   const getStatusBadge = (status: PaymentTransaction['status']) => {

@@ -205,21 +205,8 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
 
       if (error) throw error;
 
-      // Also enroll the user in the course
-      const payment = state.transactions.find(t => t.id === transactionId);
-      if (payment) {
-        const { error: enrollError } = await supabase
-          .from('course_enrollments')
-          .insert({
-            user_id: payment.userId,
-            course_id: payment.courseId,
-            enrolled_at: new Date().toISOString()
-          });
-
-        if (enrollError && enrollError.code !== '23505') { // Ignore duplicate key error
-          console.error('Error enrolling user:', enrollError);
-        }
-      }
+      // Note: Skip course enrollment as we're using local course data
+      // The course access will be managed through the frontend logic
 
       dispatch({
         type: 'UPDATE_TRANSACTION',
