@@ -49,7 +49,8 @@ const TeamSection = () => {
       specialization: "إدارة الأعمال الحديثة",
       experience: "14+ سنة خبرة",
       icon: GraduationCap,
-      gradient: "from-primary to-accent"
+      gradient: "from-primary to-accent",
+      photo: "/lovable-uploads/d108ca26-bf9e-4b4b-9aa6-7ddcb8db0d34.png"
     }
   ];
 
@@ -100,9 +101,19 @@ const TeamSection = () => {
             <Card key={index} className="group border-0 shadow-card hover:shadow-elegant transition-all duration-500 hover:scale-105 bg-gradient-card">
               <CardContent className="p-6 md:p-8">
                 <div className="text-center">
-                  <div className={`bg-gradient-to-r ${trainer.gradient} p-4 rounded-2xl shadow-hover group-hover:shadow-glow transition-all duration-300 mb-6 mx-auto w-fit`}>
-                    <trainer.icon className="w-8 h-8 md:w-10 md:h-10 text-white drop-shadow-sm" />
-                  </div>
+                  {trainer.photo ? (
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden shadow-hover group-hover:shadow-glow transition-all duration-300 mb-6 mx-auto border-2 border-primary/20">
+                      <img 
+                        src={trainer.photo} 
+                        alt={trainer.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className={`bg-gradient-to-r ${trainer.gradient} p-4 rounded-2xl shadow-hover group-hover:shadow-glow transition-all duration-300 mb-6 mx-auto w-fit`}>
+                      <trainer.icon className="w-8 h-8 md:w-10 md:h-10 text-white drop-shadow-sm" />
+                    </div>
+                  )}
                   
                   <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300 font-cairo">
                     {trainer.name}
