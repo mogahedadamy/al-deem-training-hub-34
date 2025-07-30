@@ -94,7 +94,7 @@ const Profile = () => {
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  <span className="font-cairo">انضم في {new Date(state.user?.created_at || new Date()).toLocaleDateString('ar-SA')}</span>
+                  <span className="font-cairo">انضم في {new Date().toLocaleDateString('ar-SA')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-4 h-4" />
@@ -309,7 +309,7 @@ const Profile = () => {
                       <Label htmlFor="name" className="font-cairo">الاسم الكامل</Label>
                       <Input
                         id="name"
-                        value={userInfo.name || state.user?.user_metadata?.full_name || ''}
+                        value={userInfo.email || state.user?.email || ''}
                         disabled={!isEditing}
                         className="font-cairo"
                         onChange={(e) => setUserInfo({...userInfo, name: e.target.value})}
@@ -331,7 +331,7 @@ const Profile = () => {
                       <Label htmlFor="phone" className="font-cairo">رقم الجوال</Label>
                       <Input
                         id="phone"
-                        value={userInfo.phone || state.user?.user_metadata?.phone || ''}
+                        value={userInfo.email || state.user?.email || ''}
                         disabled={!isEditing}
                         className="font-cairo"
                         dir="ltr"
@@ -343,7 +343,7 @@ const Profile = () => {
                     <Label htmlFor="bio" className="font-cairo">نبذة شخصية</Label>
                     <Textarea
                       id="bio"
-                      value={userInfo.bio || state.user?.user_metadata?.bio || ''}
+                      value={userInfo.email || ''}
                       disabled={!isEditing}
                       className="font-cairo"
                       rows={3}
