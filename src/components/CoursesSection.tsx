@@ -57,69 +57,96 @@ const CoursesSection = () => {
         </Link>
       </Button>;
   };
-  return <section id="courses" className="py-12 md:py-16 bg-muted/30">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-4 md:mb-6 font-cairo leading-tight">
-            برامجنا
+  return <section id="courses" className="py-12 md:py-16 relative overflow-hidden border-b border-primary/10">
+      {/* Section Separator */}
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-accent rounded-full animate-fade-in"></div>
+      {/* Background Elements */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-40 left-32 w-80 h-80 bg-gradient-primary rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 right-32 w-96 h-96 bg-gradient-accent rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div className="text-center mb-8 md:mb-12 pt-8">
+          <div className="inline-flex items-center gap-2 bg-gradient-primary/10 rounded-full px-4 md:px-6 py-2 md:py-3 mb-4 md:mb-6 animate-fade-in">
+            <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-primary drop-shadow-sm" />
+            <span className="text-primary font-semibold text-base md:text-lg font-cairo">دوراتنا التدريبية</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4 md:mb-6 animate-fade-in font-cairo leading-tight">
+            برامج تدريبية متميزة
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-cairo">
-            نقدم مجموعة متنوعة من البرامج التدريبية المتخصصة
+          <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto animate-fade-in leading-relaxed font-cairo px-4" style={{
+          animationDelay: "0.2s"
+        }}>
+            نقدم مجموعة متنوعة من الدورات التدريبية المتخصصة لتطوير مهاراتك المهنية وتحقيق أهدافك
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {courses.map((course, index) => <Card key={index} className="bg-white border border-border hover:shadow-soft transition-shadow">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-12 md:mb-16">
+          {courses.map((course, index) => <Card key={index} className="group border-0 shadow-card hover:shadow-elegant transition-all duration-500 hover:scale-105 bg-gradient-card animate-fade-in relative overflow-hidden" style={{
+          animationDelay: `${0.1 * index}s`
+        }}>
               {/* Badge */}
-              {course.badge && <div className="absolute top-4 right-4 z-10">
-                  <Badge variant="accent" className="text-xs font-cairo">
+              {course.badge && <div className="absolute top-2 right-2 md:top-4 md:right-4 z-10">
+                  <Badge className="bg-gradient-primary text-white border-0 shadow-hover text-xs font-cairo my-[10px] px-[5px] py-[3px] mx-[42px]">
                     {course.badge}
                   </Badge>
                 </div>}
 
-              <CardHeader className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-accent/10">
-                    <course.icon className="w-6 h-6 text-accent" />
+              <CardHeader className="pb-2 md:pb-4 relative p-3 md:p-6">
+                <div className="flex items-center justify-between mb-2 md:mb-6">
+                  <div className={`bg-gradient-to-r ${course.gradient} p-2 md:p-4 rounded-lg md:rounded-2xl shadow-hover group-hover:shadow-glow transition-all duration-300 flex-shrink-0`}>
+                    <course.icon className="w-5 h-5 md:w-9 md:h-9 text-white drop-shadow-sm" />
                   </div>
                   <div className="text-right">
-                    <div className="flex items-center gap-1 text-amber-500 mb-1">
-                      <Star className="w-4 h-4 fill-current" />
-                      <span className="text-sm font-bold font-cairo">{course.rating}</span>
+                    <div className="flex items-center gap-1 text-yellow-500 mb-1">
+                      <Star className="w-3 h-3 md:w-5 md:h-5 fill-current drop-shadow-sm" />
+                      <span className="text-xs font-bold font-cairo">{course.rating}</span>
                     </div>
                     <div className="text-xs text-muted-foreground font-cairo">{course.students} طالب</div>
                   </div>
                 </div>
-                <CardTitle className="text-lg font-bold text-primary mb-3 font-cairo">{course.title}</CardTitle>
-                <p className="text-muted-foreground text-sm font-cairo line-clamp-3">{course.description}</p>
+                <CardTitle className="text-base md:text-xl lg:text-2xl font-bold text-secondary mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300 font-cairo leading-tight">{course.title}</CardTitle>
+                <p className="text-muted-foreground leading-relaxed text-sm md:text-base font-cairo line-clamp-3">{course.description}</p>
               </CardHeader>
               
-              <CardContent className="px-6 pb-6">
-                <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4 text-accent" />
-                    <span className="font-cairo">{course.duration}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Award className="w-4 h-4 text-accent" />
-                    <span className="font-cairo">{course.level}</span>
+              <CardContent className="pt-0 space-y-2 md:space-y-6 px-3 md:px-6 pb-3 md:pb-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                     <Clock className="w-4 h-4 md:w-5 md:h-5 text-primary drop-shadow-sm flex-shrink-0" />
+                     <span className="font-medium font-cairo">{course.duration}</span>
+                   </div>
+                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                     <Award className="w-4 h-4 md:w-5 md:h-5 text-primary drop-shadow-sm flex-shrink-0" />
+                    <span className="font-medium font-cairo">{course.level}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-border">
-                  <div className="text-xl font-bold text-primary font-cairo">
+                <div className="space-y-2 md:space-y-3">
+                  {course.features.slice(0, 2).map((feature, featureIndex) => <div key={featureIndex} className="flex items-center gap-3 md:gap-4">
+                      <div className="w-2 h-2 md:w-2 md:h-2 bg-gradient-primary rounded-full flex-shrink-0"></div>
+                      <span className="text-foreground font-medium text-sm md:text-base font-cairo">{feature}</span>
+                    </div>)}
+                </div>
+
+                <div className="flex items-center justify-between pt-2 md:pt-4 border-t border-border/50">
+                  <div className="text-sm md:text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent font-cairo">
                     {formatPrice(course.price)}
                   </div>
-                  <Button className="bg-accent hover:bg-accent/90 text-white px-4 py-2 text-sm font-cairo" asChild>
-                    <Link to={!authState.isAuthenticated ? "/auth" : `${hasPaidForCourse(course.id) ? `/course/${course.id}` : `/payment/${course.id}`}`}>
-                      اشترك الآن
-                    </Link>
-                  </Button>
+                  {getEnrollmentButton(course)}
                 </div>
               </CardContent>
             </Card>)}
         </div>
 
+        <div className="text-center">
+          <Button variant="outline" size="lg" className="animate-fade-in border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 px-6 md:px-8 py-3 text-base md:text-lg font-cairo" style={{
+          animationDelay: "0.8s"
+        }}>
+            <Sparkles className="w-5 h-5 md:w-6 md:h-6 ml-3" />
+            عرض جميع الدورات
+          </Button>
+        </div>
       </div>
     </section>;
 };
