@@ -14,7 +14,7 @@ export const SupabaseProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requireAuth = true,
   requiredRole,
-  redirectTo = '/auth-supabase'
+  redirectTo = '/auth'
 }) => {
   const { state, hasRole } = useAuth();
   const location = useLocation();

@@ -5,17 +5,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
 import { LearningProvider } from "@/contexts/LearningContext";
 import { NotificationProvider } from "@/contexts/NotificationContext";
-import { AuthProvider } from "@/contexts/AuthContext";
 import { SupabaseAuthProvider } from "@/contexts/SupabaseAuthContext";
 import { PaymentProvider } from "@/contexts/PaymentContext";
-import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { SupabaseProtectedRoute } from "@/components/auth/SupabaseProtectedRoute";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CourseDetail from "./pages/CourseDetail";
 import LessonView from "./pages/LessonView";
 import ExamPage from "./pages/ExamPage";
-import AuthPage from "./pages/AuthPage";
+
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import LoadTesting from "./pages/LoadTesting";
@@ -34,7 +32,6 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <SupabaseAuthProvider>
-      <AuthProvider>
         <PaymentProvider>
           <NotificationProvider>
             <LearningProvider>
@@ -49,29 +46,21 @@ const App = () => (
               <Route 
                 path="/course/:courseId/lesson/:lessonId" 
                 element={
-                  <ProtectedRoute>
+                  <SupabaseProtectedRoute>
                     <LessonView />
-                  </ProtectedRoute>
+                  </SupabaseProtectedRoute>
                 } 
               />
               <Route 
                 path="/course/:courseId/exam" 
                 element={
-                  <ProtectedRoute>
+                  <SupabaseProtectedRoute>
                     <ExamPage />
-                  </ProtectedRoute>
+                  </SupabaseProtectedRoute>
                 } 
               />
               <Route 
                 path="/auth" 
-                element={
-                  <ProtectedRoute requireAuth={false}>
-                    <AuthPage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/auth-supabase" 
                 element={
                   <SupabaseProtectedRoute requireAuth={false}>
                     <AuthSupabase />
@@ -89,33 +78,33 @@ const App = () => (
               <Route 
                 path="/profile" 
                 element={
-                  <ProtectedRoute>
+                  <SupabaseProtectedRoute>
                     <Profile />
-                  </ProtectedRoute>
+                  </SupabaseProtectedRoute>
                 } 
               />
               <Route 
                 path="/dashboard" 
                 element={
-                  <ProtectedRoute>
+                  <SupabaseProtectedRoute>
                     <Dashboard />
-                  </ProtectedRoute>
+                  </SupabaseProtectedRoute>
                 } 
               />
               <Route 
                 path="/load-testing" 
                 element={
-                  <ProtectedRoute>
+                  <SupabaseProtectedRoute>
                     <LoadTesting />
-                  </ProtectedRoute>
+                  </SupabaseProtectedRoute>
                 } 
               />
               <Route 
                 path="/payment/:courseId" 
                 element={
-                  <ProtectedRoute>
+                  <SupabaseProtectedRoute>
                     <PaymentPage />
-                  </ProtectedRoute>
+                  </SupabaseProtectedRoute>
                 } 
               />
               <Route 
@@ -133,9 +122,9 @@ const App = () => (
               <Route 
                 path="/my-payments" 
                 element={
-                  <ProtectedRoute>
+                  <SupabaseProtectedRoute>
                     <MyPayments />
-                  </ProtectedRoute>
+                  </SupabaseProtectedRoute>
                 } 
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -145,7 +134,6 @@ const App = () => (
           </LearningProvider>
         </NotificationProvider>
       </PaymentProvider>
-    </AuthProvider>
   </SupabaseAuthProvider>
 </QueryClientProvider>
 );

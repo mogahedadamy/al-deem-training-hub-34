@@ -7,7 +7,7 @@ export default function Dashboard() {
   const { state, hasRole } = useAuth();
 
   if (!state.isAuthenticated) {
-    return <Navigate to="/auth-supabase" replace />;
+    return <Navigate to="/auth" replace />;
   }
 
   // Redirect admins to admin dashboard
