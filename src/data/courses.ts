@@ -335,6 +335,7 @@ export const courses: Course[] = [
     students: 65,
     badge: "احترافي",
     gradient: "from-secondary to-accent",
+    thumbnail: "/lovable-uploads/038d1880-f65c-46f0-aeac-883f2afb59e5.png",
     features: [
       "منهجية PMI",
       "تخطيط المشاريع",
@@ -380,6 +381,7 @@ export const courses: Course[] = [
     students: 180,
     badge: "أساسي",
     gradient: "from-primary to-accent",
+    thumbnail: "/lovable-uploads/70386337-296c-4659-80fc-2a169d90a179.png",
     features: [
       "تقنيات إدارة الوقت",
       "التخطيط الزمني",
@@ -471,6 +473,7 @@ export const courses: Course[] = [
     students: 125,
     badge: "عملي",
     gradient: "from-primary to-secondary",
+    thumbnail: "/lovable-uploads/a4f2e052-f478-4857-924c-99805e877326.png",
     features: [
       "أنواع التقارير",
       "هيكلة التقرير",
@@ -516,6 +519,7 @@ export const courses: Course[] = [
     students: 110,
     badge: "مطلوب",
     gradient: "from-secondary to-primary",
+    thumbnail: "/lovable-uploads/29d65b0d-dbe1-4661-95a1-293e023ccf90.png",
     features: [
       "استقطاب المواهب",
       "تقييم الأداء",
@@ -561,6 +565,7 @@ export const courses: Course[] = [
     students: 55,
     badge: "احترافي",
     gradient: "from-accent to-primary",
+    thumbnail: "/lovable-uploads/422f3c84-40ea-4587-a710-ac7e72d0b400.png",
     features: [
       "تقنيات التدريب",
       "تصميم البرامج",
@@ -606,6 +611,7 @@ export const courses: Course[] = [
     students: 70,
     badge: "استراتيجي",
     gradient: "from-primary to-accent",
+    thumbnail: "/lovable-uploads/eb1b0ef0-baae-43ce-9153-cafd151172ab.png",
     features: [
       "تحليل البيئة الاستراتيجية",
       "وضع الرؤية والرسالة",
