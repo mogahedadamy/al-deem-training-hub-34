@@ -38,6 +38,7 @@ interface LessonFormData {
   title: string;
   description: string;
   content: string;
+  video_url: string;
   duration_minutes: number;
   lesson_type: 'video' | 'text' | 'quiz' | 'assignment';
   is_free: boolean;
@@ -58,6 +59,7 @@ export const LessonManager: React.FC = () => {
     title: '',
     description: '',
     content: '',
+    video_url: '',
     duration_minutes: 0,
     lesson_type: 'video',
     is_free: false
@@ -177,6 +179,7 @@ export const LessonManager: React.FC = () => {
       title: lesson.title,
       description: lesson.description || '',
       content: lesson.content || '',
+      video_url: lesson.video_url || '',
       duration_minutes: lesson.duration_minutes,
       lesson_type: lesson.lesson_type,
       is_free: lesson.is_free
@@ -203,47 +206,13 @@ export const LessonManager: React.FC = () => {
     }
   };
 
-  const handleVideoUpload = async (file: File, lessonId: string) => {
-    try {
-      setUploading(true);
-      
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}.${fileExt}`;
-      const filePath = `${state.user?.id}/${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('lesson-videos')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { data } = supabase.storage
-        .from('lesson-videos')
-        .getPublicUrl(filePath);
-
-      const { error: updateError } = await supabase
-        .from('lessons')
-        .update({ video_url: data.publicUrl })
-        .eq('id', lessonId);
-
-      if (updateError) throw updateError;
-
-      toast.success('تم رفع الفيديو بنجاح');
-      await loadLessons(selectedCourse);
-    } catch (error: any) {
-      console.error('Error uploading video:', error);
-      toast.error('فشل في رفع الفيديو');
-    } finally {
-      setUploading(false);
-    }
-  };
-
   const resetForm = () => {
     setFormData({
       course_id: '',
       title: '',
       description: '',
       content: '',
+      video_url: '',
       duration_minutes: 0,
       lesson_type: 'video',
       is_free: false
@@ -387,6 +356,21 @@ export const LessonManager: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
+                    <Label htmlFor="video_url" className="font-cairo">رابط الفيديو (Bunny.net)</Label>
+                    <Input
+                      id="video_url"
+                      value={formData.video_url}
+                      onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
+                      placeholder="https://vz-xxxxx.b-cdn.net/video.mp4"
+                      className="font-cairo"
+                      dir="ltr"
+                    />
+                    <p className="text-xs text-muted-foreground font-cairo">
+                      ارفع الفيديو على Bunny.net واكتب الرابط هنا
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
                     <Label htmlFor="description" className="font-cairo">وصف الدرس</Label>
                     <Textarea
                       id="description"
@@ -464,29 +448,15 @@ export const LessonManager: React.FC = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
-                    {lesson.lesson_type === 'video' && (
-                      <>
-                        <input
-                          type="file"
-                          accept="video/*"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) handleVideoUpload(file, lesson.id);
-                          }}
-                          className="hidden"
-                          id={`video-upload-${lesson.id}`}
-                        />
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => document.getElementById(`video-upload-${lesson.id}`)?.click()}
-                          disabled={uploading}
-                          className="font-cairo"
-                        >
-                          <Upload className="w-4 h-4" />
-                          {lesson.video_url ? 'تغيير الفيديو' : 'رفع فيديو'}
-                        </Button>
-                      </>
+                    {lesson.lesson_type === 'video' && lesson.video_url && (
+                      <a
+                        href={lesson.video_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline text-xs"
+                      >
+                        عرض الفيديو
+                      </a>
                     )}
                     
                     <Button variant="outline" size="sm" onClick={() => handleEdit(lesson)}>
