@@ -5,12 +5,11 @@ import { Clock, Users, Award, BookOpen, Shield, TrendingUp, CheckSquare, Setting
 import { courses } from "@/data/courses";
 import { Link } from "react-router-dom";
 import { formatPrice } from "@/utils/currency";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/SupabaseAuthContext";
 import { usePayment } from "@/contexts/PaymentContext";
 const CoursesSection = () => {
   const {
-    state: authState,
-    hasPaidForCourse
+    state: authState
   } = useAuth();
   const {
     getTransactionByCourse
@@ -25,7 +24,7 @@ const CoursesSection = () => {
         </Button>;
     }
     const transaction = getTransactionByCourse(authState.user!.id, course.id);
-    const hasPaid = hasPaidForCourse(course.id);
+    const hasPaid = false; // Simplified for now
     if (transaction) {
       if (transaction.status === 'verified' || hasPaid) {
         return <Button className="bg-green-600 hover:bg-green-700 hover:scale-105 transition-all duration-300 px-3 md:px-6 py-2 md:py-2 text-white border-0 shadow-hover text-sm md:text-base font-cairo w-full sm:w-auto" asChild>
