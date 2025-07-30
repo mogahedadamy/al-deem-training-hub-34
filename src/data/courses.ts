@@ -14,6 +14,7 @@ export const courses: Course[] = [
     students: 320,
     badge: "الأكثر طلباً",
     gradient: "from-primary to-secondary",
+    thumbnail: "/lovable-uploads/069f09a8-bc56-4d2e-b341-8897fcf9b0e5.png",
     features: [
       "قواعد اللغة الإنجليزية",
       "المحادثة والنطق",
@@ -59,6 +60,7 @@ export const courses: Course[] = [
     students: 150,
     badge: "مجاني",
     gradient: "from-secondary to-primary",
+    thumbnail: "/lovable-uploads/51892ddc-4af3-4220-b31d-fd640cbccd88.png",
     features: [
       "مبادئ العمل التطوعي",
       "إدارة المشاريع الخيرية",
@@ -104,6 +106,7 @@ export const courses: Course[] = [
     students: 85,
     badge: "تقني",
     gradient: "from-primary to-accent",
+    thumbnail: "/lovable-uploads/6dce5d89-3789-496c-8ad1-23ba0688ab67.png",
     features: [
       "استخدام السبورة الذكية",
       "التطبيقات التعليمية",
@@ -149,7 +152,7 @@ export const courses: Course[] = [
     students: 45,
     badge: "متقدم",
     gradient: "from-secondary to-accent",
-    thumbnail: "/lovable-uploads/064978ee-09d1-48d3-bd6f-69f8b627cf3d.png",
+    thumbnail: "/lovable-uploads/8c209175-be1c-4662-a860-d8fbc512bc46.png",
     features: [
       "الإدارة الاستراتيجية",
       "التسويق والمبيعات",
@@ -195,6 +198,7 @@ export const courses: Course[] = [
     students: 95,
     badge: "مطلوب",
     gradient: "from-primary to-secondary",
+    thumbnail: "/lovable-uploads/7a61d005-a1b5-4e4a-8fe8-5bc7d60e70be.png",
     features: [
       "تحليل المخاطر",
       "خطط الطوارئ",
@@ -285,6 +289,7 @@ export const courses: Course[] = [
     students: 250,
     badge: "معتمد",
     gradient: "from-primary to-secondary",
+    thumbnail: "/lovable-uploads/2383b1a4-dde9-4ced-bed0-b4252aa44764.png",
     features: [
       "قوانين السلامة المهنية",
       "تحليل المخاطر",
