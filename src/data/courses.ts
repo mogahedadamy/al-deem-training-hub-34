@@ -114,7 +114,7 @@ export const courses: Course[] = [
       "التقييم الإلكتروني"
     ],
     instructor: {
-      name: "م. محمد علي",
+      name: "د. محمد الامام",
       avatar: "/instructors/mohamed-ali.jpg",
       bio: "خبير في التكنولوجيا التعليمية والأدوات الرقمية",
       experience: "10 سنوات"
@@ -160,7 +160,7 @@ export const courses: Course[] = [
       "القيادة والإدارة"
     ],
     instructor: {
-      name: "د. خالد الزهراني",
+      name: "معتز محجوب",
       avatar: "/instructors/khalid-zahrani.jpg",
       bio: "دكتوراه في إدارة الأعمال مع خبرة عملية 20 عاماً",
       experience: "20 سنة"
@@ -206,7 +206,7 @@ export const courses: Course[] = [
       "اتخاذ القرارات"
     ],
     instructor: {
-      name: "د. فاطمة أحمد",
+      name: "معتز محجوب",
       avatar: "/instructors/fatima-ahmed.jpg",
       bio: "خبيرة في إدارة الأزمات والتخطيط الاستراتيجي",
       experience: "15 سنة"
@@ -252,7 +252,7 @@ export const courses: Course[] = [
       "التسويق الرقمي"
     ],
     instructor: {
-      name: "أ. نورا سالم",
+      name: "أ. الهادي علي",
       avatar: "/instructors/nora-salem.jpg",
       bio: "أخصائية علاقات عامة مع خبرة في الإعلام",
       experience: "11 سنة"
@@ -298,7 +298,7 @@ export const courses: Course[] = [
       "شهادة معتمدة"
     ],
     instructor: {
-      name: "د. محمد العلي",
+      name: "باش مهندس /سامي عبدالله, باش مهندس /محمد حمد",
       avatar: "/instructors/mohamed-ali.jpg",
       bio: "خبير السلامة المهنية مع أكثر من 15 عاماً من الخبرة",
       experience: "15 سنة"
@@ -344,7 +344,7 @@ export const courses: Course[] = [
       "شهادة PMP"
     ],
     instructor: {
-      name: "م. خالد الزهراني",
+      name: "احمد حذيفه",
       avatar: "/instructors/khalid-zahrani.jpg",
       bio: "مدير مشاريع معتمد PMP مع خبرة في إدارة المشاريع الكبرى",
       experience: "20 سنة"
@@ -390,7 +390,7 @@ export const courses: Course[] = [
       "أدوات التنظيم"
     ],
     instructor: {
-      name: "أ. سارة أحمد",
+      name: "معتز محجوب",
       avatar: "/instructors/sara-ahmed.jpg",
       bio: "مدربة معتمدة في الإنتاجية وإدارة الوقت",
       experience: "9 سنوات"
@@ -436,7 +436,7 @@ export const courses: Course[] = [
       "شهادة جودة"
     ],
     instructor: {
-      name: "د. أحمد محمود",
+      name: "د. عبدالمطلب ابراهيم",
       avatar: "/instructors/ahmed-mahmoud.jpg",
       bio: "خبير جودة معتمد مع خبرة في تطبيق أنظمة الجودة",
       experience: "16 سنة"
@@ -482,7 +482,7 @@ export const courses: Course[] = [
       "العرض والتقديم"
     ],
     instructor: {
-      name: "د. ليلى سالم",
+      name: "معتز محجوب",
       avatar: "/instructors/laila-salem.jpg",
       bio: "أستاذة اللغة العربية ومدربة في الكتابة المهنية",
       experience: "13 سنة"
@@ -528,7 +528,7 @@ export const courses: Course[] = [
       "إدارة التعويضات"
     ],
     instructor: {
-      name: "أ. نورا الفيصل",
+      name: "د. احمد موسى",
       avatar: "/instructors/nora-faisal.jpg",
       bio: "أخصائية موارد بشرية معتمدة مع خبرة في التطوير التنظيمي",
       experience: "14 سنة"
@@ -574,7 +574,7 @@ export const courses: Course[] = [
       "التقييم والمتابعة"
     ],
     instructor: {
-      name: "د. محمد الخطيب",
+      name: "عمر التهامي",
       avatar: "/instructors/mohamed-khateeb.jpg",
       bio: "خبير تدريب معتمد دولياً مع أكثر من 18 عاماً في التدريب",
       experience: "18 سنة"
@@ -666,7 +666,7 @@ export const courses: Course[] = [
       "التقارير المالية"
     ],
     instructor: {
-      name: "أ. فاطمة سالم",
+      name: "عوض سلامه",
       avatar: "/instructors/fatima-salem.jpg",
       bio: "محاسبة معتمدة ومدربة في الأنظمة المالية وإدارة المخازن",
       experience: "12 سنة"
