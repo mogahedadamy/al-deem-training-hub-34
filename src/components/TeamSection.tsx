@@ -42,7 +42,7 @@ const TeamSection = () => {
             <Users className="w-5 h-5 md:w-6 md:h-6 text-primary drop-shadow-sm" />
             <span className="text-primary font-semibold text-base md:text-lg font-cairo">فريق الخبراء</span>
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4 md:mb-6 animate-fade-in font-cairo leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4 md:mb-6 animate-fade-in font-cairo leading-tight py-[9px]">
             نخبة من المدربين المتخصصين
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto animate-fade-in leading-relaxed font-cairo px-4" style={{
