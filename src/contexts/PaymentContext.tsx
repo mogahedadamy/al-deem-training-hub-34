@@ -149,14 +149,16 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
     dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      // Get course details to get the price
-      const { data: courseData, error: courseError } = await supabase
-        .from('courses')
-        .select('price')
-        .eq('id', courseId)
-        .single();
+      // Get course details from local data instead of database
+      const { courses } = await import('@/data/courses');
+      const course = courses.find(c => c.id === courseId);
+      
+      if (!course) {
+        throw new Error('الدورة غير موجودة');
+      }
 
-      if (courseError) throw courseError;
+      // Convert price string to number (remove currency and commas)
+      const priceNumber = parseFloat(course.price.replace(/[^\d.]/g, ''));
 
       // Insert payment record
       const { data, error } = await supabase
@@ -165,7 +167,7 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
           user_id: authState.user.id,
           course_id: courseId,
           transaction_id: transactionId,
-          amount: courseData.price,
+          amount: priceNumber,
           currency: 'SDG',
           status: 'verification_submitted',
           receipt_image_url: receiptImage,
