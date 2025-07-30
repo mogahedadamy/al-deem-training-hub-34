@@ -244,6 +244,7 @@ export const courses: Course[] = [
     students: 78,
     badge: "شائع",
     gradient: "from-accent to-primary",
+    thumbnail: "/lovable-uploads/f393a4e7-823b-4289-a00b-705a7b72c8c5.png",
     features: [
       "إدارة السمعة",
       "التواصل الإعلامي",
