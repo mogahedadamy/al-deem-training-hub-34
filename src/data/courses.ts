@@ -145,7 +145,7 @@ export const courses: Course[] = [
     title: "الماجستير المهني المصغر في إدارة الأعمال",
     description: "برنامج مكثف في إدارة الأعمال والاستراتيجية",
     icon: TrendingUp,
-    duration: "أسبوع واحد",
+    duration: "أسبوعين",
     level: "متقدم",
     price: "85,000 ج.س",
     rating: 4.9,
