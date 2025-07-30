@@ -46,7 +46,7 @@ const HeroSection = () => {
           <div className="mb-6 md:mb-8 lg:mb-12 animate-fade-in">
             <div className="inline-flex items-center gap-2 lg:gap-4 bg-white/15 backdrop-blur-lg rounded-full px-4 md:px-6 lg:px-10 py-2 md:py-3 lg:py-5 border border-white/30 mb-4 md:mb-6 lg:mb-10 shadow-2xl">
               <TrendingUp className="w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 text-primary drop-shadow-sm" />
-              <span className="text-white font-medium text-sm md:text-base lg:text-xl font-cairo">مركز التدريب الأول في السودان</span>
+              <span className="text-white font-medium text-sm md:text-base lg:text-xl font-cairo">المركز الإلكترونى الأول فى السودان</span>
             </div>
           </div>
           
