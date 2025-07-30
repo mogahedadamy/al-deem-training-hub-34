@@ -12,14 +12,14 @@ import { Badge } from "@/components/ui/badge";
 import { NotificationDropdown } from "@/components/notifications/NotificationDropdown";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/SupabaseAuthContext";
 import { useNotifications } from "@/contexts/NotificationContext";
 import { useTestNotifications } from "@/hooks/useTestNotifications";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const { state, logout } = useAuth();
+  const { state, signOut } = useAuth();
   const { 
     getUserNotifications, 
     getUnreadCount, 
@@ -32,8 +32,8 @@ const Header = () => {
   // Initialize test notifications
   useTestNotifications();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await signOut();
     setIsMenuOpen(false);
     navigate('/');
   };
@@ -122,47 +122,44 @@ const Header = () => {
                 {/* User Dropdown */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-10 w-auto px-2 hover:bg-primary/10">
-                      <div className="flex items-center space-x-2">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage src={state.user.avatar} alt={state.user.name} />
-                          <AvatarFallback className="bg-primary text-white">
-                            {state.user.name.split(' ').map(n => n[0]).join('')}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="text-right hidden md:block">
-                          <p className="text-sm font-medium">{state.user.name}</p>
-                          <Badge variant="secondary" className="text-xs">
-                            {state.user.enrolledCourses.length} دورة
-                          </Badge>
+                     <Button variant="ghost" className="relative h-10 w-auto px-2 hover:bg-primary/10">
+                       <div className="flex items-center space-x-2">
+                         <Avatar className="h-8 w-8">
+                            <AvatarImage src="" alt={state.user.email} />
+                            <AvatarFallback className="bg-primary text-white">
+                              {state.user.email.charAt(0).toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="text-right hidden md:block">
+                            <p className="text-sm font-medium">{state.user.email}</p>
+                            <Badge variant="secondary" className="text-xs">
+                              طالب
+                            </Badge>
+                          </div>
+                          <ChevronDown className="h-4 w-4 text-muted-foreground" />
                         </div>
-                        <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                      </div>
-                    </Button>
+                      </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-64" align="end">
-                    <div className="flex items-center justify-start gap-2 p-3">
-                      <Avatar className="h-10 w-10">
-                        <AvatarImage src={state.user.avatar} alt={state.user.name} />
-                        <AvatarFallback className="bg-primary text-white">
-                          {state.user.name.split(' ').map(n => n[0]).join('')}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col space-y-1 leading-none">
-                        <p className="font-medium">{state.user.name}</p>
-                        <p className="w-[180px] truncate text-sm text-muted-foreground">
-                          {state.user.email}
-                        </p>
-                        <div className="flex space-x-1 mt-1">
-                          <Badge variant="outline" className="text-xs">
-                            {state.user.enrolledCourses.length} دورة
-                          </Badge>
-                          <Badge variant="secondary" className="text-xs">
-                            {state.user.completedCourses.length} مكتملة
-                          </Badge>
+                     <div className="flex items-center justify-start gap-2 p-3">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage src="" alt={state.user.email} />
+                          <AvatarFallback className="bg-primary text-white">
+                            {state.user.email.charAt(0).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col space-y-1 leading-none">
+                          <p className="font-medium">{state.user.email}</p>
+                          <p className="w-[180px] truncate text-sm text-muted-foreground">
+                            {state.user.email}
+                          </p>
+                          <div className="flex space-x-1 mt-1">
+                            <Badge variant="outline" className="text-xs">
+                              طالب
+                            </Badge>
+                          </div>
                         </div>
                       </div>
-                    </div>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => navigate('/profile')}>
                       <User className="mr-2 h-4 w-4" />
@@ -176,13 +173,13 @@ const Header = () => {
                       <BarChart3 className="mr-2 h-4 w-4" />
                       تقدمي
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Award className="mr-2 h-4 w-4" />
-                      شهاداتي
-                      <Badge className="mr-auto text-xs">
-                        {state.user.certificates.length}
-                      </Badge>
-                    </DropdownMenuItem>
+                     <DropdownMenuItem>
+                       <Award className="mr-2 h-4 w-4" />
+                       شهاداتي
+                       <Badge className="mr-auto text-xs">
+                         0
+                       </Badge>
+                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <Settings className="mr-2 h-4 w-4" />
                       الإعدادات
@@ -200,14 +197,14 @@ const Header = () => {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  onClick={() => navigate('/auth-supabase')}
+                   onClick={() => navigate('/auth')}
                   className="font-cairo hover:bg-primary/10"
                 >
                   <LogIn className="w-4 h-4 ml-2" />
                   تسجيل الدخول
                 </Button>
                 <Button 
-                  onClick={() => navigate('/auth-supabase')}
+                  onClick={() => navigate('/auth')}
                   className="bg-gradient-primary hover:shadow-glow transition-all duration-300 font-cairo"
                   size="sm"
                 >
@@ -279,23 +276,23 @@ const Header = () => {
               <div className="mt-4 pt-4 border-t border-border/20">
                 {state.isAuthenticated && state.user ? (
                   <div className="space-y-2">
-                    <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg">
-                      <Avatar className="h-12 w-12">
-                        <AvatarImage src={state.user.avatar} alt={state.user.name} />
-                        <AvatarFallback className="bg-primary text-white">
-                          {state.user.name.split(' ').map(n => n[0]).join('')}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <p className="font-medium text-sm">{state.user.name}</p>
-                        <p className="text-xs text-muted-foreground truncate">{state.user.email}</p>
-                        <div className="flex space-x-1 mt-1">
-                          <Badge variant="outline" className="text-xs">
-                            {state.user.enrolledCourses.length} دورة
-                          </Badge>
+                     <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg">
+                        <Avatar className="h-12 w-12">
+                          <AvatarImage src="" alt={state.user.email} />
+                          <AvatarFallback className="bg-primary text-white">
+                            {state.user.email.charAt(0).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                          <p className="font-medium text-sm">{state.user.email}</p>
+                          <p className="text-xs text-muted-foreground truncate">{state.user.email}</p>
+                          <div className="flex space-x-1 mt-1">
+                            <Badge variant="outline" className="text-xs">
+                              طالب
+                            </Badge>
+                          </div>
                         </div>
                       </div>
-                    </div>
                     <Button 
                       variant="ghost" 
                       className="w-full justify-start" 
@@ -333,7 +330,7 @@ const Header = () => {
                   <div className="space-y-2">
                     <Button 
                       className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300 font-cairo" 
-                      onClick={() => handleNavigation('/auth-supabase')}
+                       onClick={() => handleNavigation('/auth')}
                     >
                       <LogIn className="mr-2 h-4 w-4" />
                       تسجيل الدخول
@@ -341,7 +338,7 @@ const Header = () => {
                     <Button 
                       variant="outline" 
                       className="w-full border-primary/20 hover:border-primary font-cairo" 
-                      onClick={() => handleNavigation('/auth-supabase')}
+                      onClick={() => handleNavigation('/auth')}
                     >
                       إنشاء حساب
                     </Button>
