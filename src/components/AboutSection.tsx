@@ -68,6 +68,23 @@ const AboutSection = () => {
           <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto animate-fade-in leading-relaxed font-cairo px-4" style={{ animationDelay: "0.2s" }}>
             مؤسسة تدريبية رائدة مسجلة ومعتمدة تحت رقم 1016 تسعى لتقديم أفضل البرامج التدريبية المتخصصة في التطوير الإداري والقيادي والتثقيفي
           </p>
+          
+          {/* صور أنشطة المركز */}
+          <div className="mt-8 md:mt-12 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+            <div className="relative max-w-5xl mx-auto">
+              <img 
+                src="/lovable-uploads/296bded3-68f3-4512-8b3b-de7cfeb9cbe3.png" 
+                alt="أنشطة وفعاليات مركز العميد للتدريب المتقدم"
+                className="w-full h-auto rounded-2xl shadow-elegant border border-primary/20 hover:shadow-glow transition-all duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent rounded-2xl"></div>
+              <div className="absolute bottom-4 left-4 right-4 text-center">
+                <p className="text-sm md:text-base font-medium text-white bg-primary/90 backdrop-blur-sm px-4 py-2 md:px-6 md:py-3 rounded-lg inline-block shadow-elegant font-cairo">
+                  التدريب يطور القدرات ويوسع الفرص
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center mb-8 md:mb-12">
