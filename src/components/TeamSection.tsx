@@ -2,27 +2,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { GraduationCap, Users, Award, BookOpen } from "lucide-react";
 const TeamSection = () => {
   const trainers = [{
-    name: "د. مهند حسن",
-    title: "خبير الجودة والاعتماد",
-    specialization: "إدارة الجودة الشاملة",
-    experience: "15+ سنة خبرة",
-    icon: Award,
-    gradient: "from-primary to-secondary"
-  }, {
-    name: "بروف ضياء الدين محمد الحسن",
-    title: "عميد كلية التربية",
-    specialization: "التربية والتعليم",
-    experience: "20+ سنة خبرة",
-    icon: GraduationCap,
-    gradient: "from-secondary to-primary"
-  }, {
-    name: "بروف الطيب إبراهيم",
-    title: "المدير السابق",
-    specialization: "الإدارة الاستراتيجية",
-    experience: "18+ سنة خبرة",
-    icon: Users,
-    gradient: "from-primary to-accent"
-  }, {
     name: "أ. معتز محجوب",
     title: "مدرب معتمد",
     specialization: "التطوير المهني",
