@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RoleManager } from '@/components/admin/RoleManager';
+import { CourseManager } from '@/components/admin/CourseManager';
+import { LessonManager } from '@/components/admin/LessonManager';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -88,10 +90,11 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="users" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="users" className="font-cairo">إدارة المستخدمين</TabsTrigger>
-            <TabsTrigger value="courses" className="font-cairo">إدارة الدورات</TabsTrigger>
-            <TabsTrigger value="payments" className="font-cairo">إدارة المدفوعات</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="users" className="font-cairo">المستخدمين</TabsTrigger>
+            <TabsTrigger value="courses" className="font-cairo">الدورات</TabsTrigger>
+            <TabsTrigger value="lessons" className="font-cairo">الدروس</TabsTrigger>
+            <TabsTrigger value="payments" className="font-cairo">المدفوعات</TabsTrigger>
             <TabsTrigger value="settings" className="font-cairo">الإعدادات</TabsTrigger>
           </TabsList>
 
@@ -100,17 +103,11 @@ export default function AdminDashboard() {
           </TabsContent>
 
           <TabsContent value="courses" className="mt-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="font-cairo">إدارة الدورات</CardTitle>
-                <CardDescription className="font-cairo">
-                  إضافة وتعديل وحذف الدورات التدريبية
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground font-cairo">قريباً...</p>
-              </CardContent>
-            </Card>
+            <CourseManager />
+          </TabsContent>
+
+          <TabsContent value="lessons" className="mt-6">
+            <LessonManager />
           </TabsContent>
 
           <TabsContent value="payments" className="mt-6">
