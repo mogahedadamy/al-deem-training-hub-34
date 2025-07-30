@@ -9,7 +9,7 @@ import {
   ArrowLeft,
   Eye
 } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { usePayment } from '@/contexts/PaymentContext';
 import { courses } from '@/data/courses';
 import { formatPrice } from '@/utils/currency';

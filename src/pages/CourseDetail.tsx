@@ -10,7 +10,7 @@ import {
   ArrowLeft
 } from "lucide-react";
 import { getCourseById } from "@/data/courses";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/SupabaseAuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { formatPrice } from "@/utils/currency";
@@ -19,7 +19,7 @@ import { usePayment } from "@/contexts/PaymentContext";
 const CourseDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { state, enrollInCourse, isEnrolledInCourse } = useAuth();
+  const { state } = useAuth();
   const { getTransactionByCourse } = usePayment();
   const course = id ? getCourseById(id) : null;
   
@@ -33,9 +33,9 @@ const CourseDetail = () => {
       return;
     }
 
-    // If user has verified payment, enroll directly
-    if (hasVerifiedPayment && course && !isEnrolledInCourse(course.id)) {
-      enrollInCourse(course.id);
+    // If user has verified payment, redirect to course
+    if (hasVerifiedPayment && course) {
+      navigate(`/course/${course.id}`);
     } else if (course) {
       // Otherwise, redirect to payment page
       navigate(`/payment/${course.id}`);
@@ -166,7 +166,7 @@ const CourseDetail = () => {
                   <div className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent font-cairo mb-2">
                     {formatPrice(course.price)}
                   </div>
-                  {state.isAuthenticated && isEnrolledInCourse(course.id) ? (
+                  {state.isAuthenticated && hasVerifiedPayment ? (
                     <Button 
                       onClick={handleStartLearning}
                       className="w-full bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all duration-300 text-white border-0 shadow-hover font-cairo"
@@ -176,11 +176,11 @@ const CourseDetail = () => {
                     </Button>
                   ) : state.isAuthenticated && hasVerifiedPayment ? (
                     <Button 
-                      onClick={handleEnrollment}
+                      onClick={() => navigate(`/course/${course.id}`)}
                       className="w-full bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all duration-300 text-white border-0 shadow-hover font-cairo"
                     >
-                      <CheckCircle className="w-5 h-5 ml-2" />
-                      سجل في الدورة
+                      <BookOpen className="w-5 h-5 ml-2" />
+                      دخول الدورة
                     </Button>
                   ) : state.isAuthenticated && userTransaction?.status === 'verification_submitted' ? (
                     <div className="space-y-3">
@@ -205,7 +205,7 @@ const CourseDetail = () => {
                     </Button>
                   )}
                   
-                  {state.isAuthenticated && isEnrolledInCourse(course.id) && (
+                  {state.isAuthenticated && hasVerifiedPayment && (
                     <div className="mt-4">
                       <Link to={`/course/${course.id}/exam`}>
                         <Button 
@@ -272,10 +272,10 @@ const CourseDetail = () => {
                 <Card 
                   key={lesson.id} 
                   className={`border-0 shadow-card bg-gradient-card hover:shadow-hover transition-all duration-300 ${
-                    state.isAuthenticated && isEnrolledInCourse(course.id) ? 'cursor-pointer' : ''
+                    state.isAuthenticated && hasVerifiedPayment ? 'cursor-pointer' : ''
                   }`}
                   onClick={() => {
-                    if (state.isAuthenticated && isEnrolledInCourse(course.id)) {
+                    if (state.isAuthenticated && hasVerifiedPayment) {
                       navigate(`/course/${course.id}/lesson/${lesson.id}`);
                     }
                   }}
@@ -294,7 +294,7 @@ const CourseDetail = () => {
                       <div className="flex items-center gap-3 text-muted-foreground">
                         <Clock className="w-4 h-4" />
                         <span className="font-cairo">{lesson.duration} دقيقة</span>
-                        {!(state.isAuthenticated && isEnrolledInCourse(course.id)) && (
+                        {!(state.isAuthenticated && hasVerifiedPayment) && (
                           <div className="bg-muted/50 px-2 py-1 rounded text-xs font-cairo">
                             مُؤمّن
                           </div>

@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getCourseById } from "@/data/courses";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/SupabaseAuthContext";
 import { useLearning } from "@/contexts/LearningContext";
 import { useVideoProgress } from "@/hooks/useVideoProgress";
 import { useLessonNavigation } from "@/hooks/useLessonNavigation";
@@ -24,8 +24,7 @@ import Header from "@/components/Header";
 
 const LessonView = () => {
   const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>();
-  const { completeCourse } = useAuth();
-  const { state } = useLearning();
+  const { state: authState } = useAuth();
   const course = courseId ? getCourseById(courseId) : null;
   const lesson = course?.lessons.find(l => l.id === lessonId);
   
@@ -96,9 +95,7 @@ const LessonView = () => {
       
       // Check if this is the last lesson to complete the course
       const updatedCompleted = [...completedLessons, lesson.id];
-      if (course && updatedCompleted.length === course.lessons.length) {
-        completeCourse(course.id);
-      }
+      // Simplified for now - just mark as completed
     }
   };
 
@@ -125,7 +122,7 @@ const LessonView = () => {
       id: `q${Date.now()}`,
       lessonId: lessonId || "",
       courseId: courseId || "",
-      userId: state.user?.id || "anonymous",
+      userId: authState.user?.id || "anonymous",
       userType: "student" as const,
       title: questionData.title,
       content: questionData.content,
@@ -138,9 +135,9 @@ const LessonView = () => {
       userVote: undefined as 'up' | 'down' | undefined,
       tags: questionData.tags,
       user: {
-        id: state.user?.id || "anonymous",
-        name: state.user?.name || "مستخدم مجهول",
-        avatar: state.user?.avatar || "",
+        id: authState.user?.id || "anonymous",
+        name: authState.user?.user_metadata?.full_name || authState.user?.email || "مستخدم مجهول",
+        avatar: authState.user?.user_metadata?.avatar_url || "",
         role: "طالب"
       }
     };

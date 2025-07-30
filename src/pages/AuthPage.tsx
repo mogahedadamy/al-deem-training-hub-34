@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowRight, BookOpen, Shield } from 'lucide-react';
 
 export default function Auth() {
@@ -20,7 +21,7 @@ export default function Auth() {
     phone: ''
   });
 
-  const { login, register, state } = useAuth();
+  const { signIn, signUp, state } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,7 +32,7 @@ export default function Auth() {
     e.preventDefault();
     setIsLoading(true);
 
-    const success = await login(formData.email, formData.password);
+    const success = await signIn(formData.email, formData.password);
     if (success) {
       navigate(from, { replace: true });
     }
@@ -43,15 +44,12 @@ export default function Auth() {
     e.preventDefault();
     setIsLoading(true);
 
-    const success = await register({
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-      phone: formData.phone
-    });
-
+    const success = await signUp(formData.email, formData.password, `${window.location.origin}/`);
     if (success) {
-      navigate(from, { replace: true });
+      toast.success('تم إنشاء الحساب بنجاح! يرجى التحقق من بريدك الإلكتروني');
+      navigate('/dashboard');
+    } else {
+      toast.error('حدث خطأ أثناء إنشاء الحساب');
     }
 
     setIsLoading(false);
