@@ -10,7 +10,7 @@ const HeroSection = () => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroBg})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
       </div>
       
       {/* Enhanced Floating Elements - More spread out on desktop */}
@@ -50,11 +50,11 @@ const HeroSection = () => {
             </div>
           </div>
           
-          <h1 className="text-3xl md:text-5xl lg:text-8xl xl:text-9xl font-bold text-white mb-6 md:mb-8 lg:mb-16 animate-fade-in leading-tight font-cairo">
-            مركز <span className="bg-gradient-accent bg-clip-text text-transparent drop-shadow-2xl">العميد</span> للتدريب المتقدم
+          <h1 className="text-3xl md:text-5xl lg:text-8xl xl:text-9xl font-bold text-white mb-6 md:mb-8 lg:mb-16 animate-fade-in leading-tight font-cairo drop-shadow-2xl" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.6)" }}>
+            مركز <span className="bg-gradient-accent bg-clip-text text-transparent drop-shadow-2xl" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>العميد</span> للتدريب المتقدم
           </h1>
           
-          <p className="text-lg md:text-2xl lg:text-4xl xl:text-5xl text-white/95 mb-8 md:mb-12 lg:mb-20 animate-fade-in font-light leading-relaxed font-cairo px-4 lg:px-8 max-w-5xl mx-auto" style={{ animationDelay: "0.2s" }}>
+          <p className="text-lg md:text-2xl lg:text-4xl xl:text-5xl text-white mb-8 md:mb-12 lg:mb-20 animate-fade-in font-light leading-relaxed font-cairo px-4 lg:px-8 max-w-5xl mx-auto drop-shadow-lg" style={{ animationDelay: "0.2s", textShadow: "1px 1px 3px rgba(0,0,0,0.8)" }}>
             نقدم دورات تدريبية متخصصة في التطوير الإداري والقيادي والتثقيفي مع فريق من الخبراء المعتمدين
           </p>
           
