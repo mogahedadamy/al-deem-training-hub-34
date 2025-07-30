@@ -71,9 +71,9 @@ const Profile = () => {
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="relative">
               <Avatar className="w-32 h-32 border-4 border-white shadow-elegant">
-                <AvatarImage src={state.user?.user_metadata?.avatar_url} alt={state.user?.user_metadata?.full_name || state.user?.email} />
+                <AvatarImage src="" alt={state.user?.email} />
                 <AvatarFallback className="bg-gradient-primary text-white text-3xl font-cairo">
-                  {(state.user?.user_metadata?.full_name || state.user?.email || 'U').split(' ').map((n: string) => n[0]).join('')}
+                  {(state.user?.email || 'U').charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <Button
@@ -86,10 +86,10 @@ const Profile = () => {
             
             <div className="flex-1 text-center md:text-right">
               <h1 className="text-3xl md:text-4xl font-bold font-cairo mb-2">
-                {state.user?.user_metadata?.full_name || state.user?.email}
+                {state.user?.email}
               </h1>
               <p className="text-muted-foreground font-cairo mb-4">
-                {state.user?.user_metadata?.bio || 'لم يتم إضافة نبذة شخصية بعد'}
+                {'لم يتم إضافة نبذة شخصية بعد'}
               </p>
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">

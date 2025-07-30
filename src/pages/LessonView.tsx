@@ -136,8 +136,8 @@ const LessonView = () => {
       tags: questionData.tags,
       user: {
         id: authState.user?.id || "anonymous",
-        name: authState.user?.user_metadata?.full_name || authState.user?.email || "مستخدم مجهول",
-        avatar: authState.user?.user_metadata?.avatar_url || "",
+        name: authState.user?.email || "مستخدم مجهول",
+        avatar: "",
         role: "طالب"
       }
     };
