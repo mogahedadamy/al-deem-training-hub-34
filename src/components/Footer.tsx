@@ -38,23 +38,10 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="border-t border-border/50 mt-6 pt-4">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
-            <div className="flex flex-col items-center md:items-start space-y-1">
-              <p className="text-xs text-muted-foreground text-center">
-                © 2025 مركز العميد للتدريب المتقدم. جميع الحقوق محفوظة.
-              </p>
-              <p className="text-xs text-muted-foreground text-center">
-                تم التطوير بواسطة SudaPixel
-              </p>
-            </div>
-            <div className="flex space-x-4 space-x-reverse">
-              <a href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors">
-                سياسة الخصوصية
-              </a>
-              <a href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors">
-                الشروط والأحكام
-              </a>
-            </div>
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground">
+              كل الحقوق محفوظة © 2025 • تم التطوير بواسطة SudaPixel
+            </p>
           </div>
           
           {/* Admin Access - Small Button */}
