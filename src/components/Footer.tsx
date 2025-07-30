@@ -1,4 +1,5 @@
-import { Phone, Mail, BookOpen } from "lucide-react";
+import { Phone, Mail, BookOpen, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -55,6 +56,15 @@ const Footer = () => {
               </a>
             </div>
           </div>
+          
+          {/* Admin Access - Hidden Button */}
+          <Link 
+            to="/admin/login" 
+            className="fixed bottom-4 left-4 w-3 h-3 opacity-10 hover:opacity-30 transition-opacity duration-300"
+            title="إدارة النظام"
+          >
+            <Settings className="w-3 h-3 text-muted-foreground" />
+          </Link>
         </div>
       </div>
     </footer>
