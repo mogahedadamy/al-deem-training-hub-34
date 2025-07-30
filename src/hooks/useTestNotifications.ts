@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNotifications } from '@/contexts/NotificationContext';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 
 export const useTestNotifications = () => {
   const { createSystemNotification } = useNotifications();
