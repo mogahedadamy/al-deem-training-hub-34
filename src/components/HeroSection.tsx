@@ -68,32 +68,64 @@ const HeroSection = () => {
             </Button>
           </div>
 
-          {/* Enhanced Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8 mt-12 md:mt-20 animate-fade-in px-4" style={{ animationDelay: "0.6s" }}>
-            <div className="group hover:scale-105 transition-all duration-300">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/20 shadow-elegant hover:shadow-glow hover:bg-white/20">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-3 bg-gradient-accent bg-clip-text text-transparent font-cairo">500+</div>
-                <div className="text-white/90 text-base md:text-lg font-medium font-cairo">متدرب نجح معنا</div>
-                <div className="text-white/70 text-xs md:text-sm mt-1 font-cairo">في مختلف المجالات</div>
+          {/* Professional Stats Cards */}
+          <div className="mt-16 md:mt-24 animate-fade-in" style={{ animationDelay: "0.6s" }}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+              
+              {/* Students Success Card */}
+              <div className="group relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 rounded-3xl"></div>
+                <div className="relative bg-white/15 backdrop-blur-xl rounded-3xl p-8 border border-white/30 hover:border-white/50 transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/20">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
+                      <Users className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-4xl md:text-5xl font-bold text-white mb-1 font-cairo">500+</div>
+                      <div className="w-12 h-1 bg-gradient-to-r from-primary to-accent rounded-full ml-auto"></div>
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2 font-cairo">متدرب نجح معنا</h3>
+                  <p className="text-white/80 text-sm font-cairo leading-relaxed">خريجون متميزون في مختلف المجالات التدريبية والمهنية</p>
+                </div>
               </div>
-            </div>
-            <div className="group hover:scale-105 transition-all duration-300">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/20 shadow-elegant hover:shadow-glow hover:bg-white/20">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-3 bg-gradient-accent bg-clip-text text-transparent font-cairo">50+</div>
-                <div className="text-white/90 text-base md:text-lg font-medium font-cairo">دورة تدريبية</div>
-                <div className="text-white/70 text-xs md:text-sm mt-1 font-cairo">معتمدة ومتطورة</div>
+
+              {/* Courses Card */}
+              <div className="group relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 rounded-3xl"></div>
+                <div className="relative bg-white/15 backdrop-blur-xl rounded-3xl p-8 border border-white/30 hover:border-white/50 transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/20">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-secondary to-info rounded-2xl flex items-center justify-center shadow-lg">
+                      <BookOpen className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-4xl md:text-5xl font-bold text-white mb-1 font-cairo">50+</div>
+                      <div className="w-12 h-1 bg-gradient-to-r from-secondary to-info rounded-full ml-auto"></div>
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2 font-cairo">دورة تدريبية</h3>
+                  <p className="text-white/80 text-sm font-cairo leading-relaxed">برامج تدريبية معتمدة ومتطورة في جميع التخصصات</p>
+                </div>
               </div>
-            </div>
-          </div>
-          
-          {/* Third stat below grid on mobile */}
-          <div className="flex justify-center mt-4 md:mt-0 animate-fade-in px-4" style={{ animationDelay: "0.6s" }}>
-            <div className="group hover:scale-105 transition-all duration-300 w-full max-w-xs md:max-w-none">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/20 shadow-elegant hover:shadow-glow hover:bg-white/20">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-3 bg-gradient-accent bg-clip-text text-transparent font-cairo">5+</div>
-                <div className="text-white/90 text-base md:text-lg font-medium font-cairo">سنوات خبرة</div>
-                <div className="text-white/70 text-xs md:text-sm mt-1 font-cairo">في التدريب المهني</div>
+
+              {/* Experience Card */}
+              <div className="group relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 rounded-3xl"></div>
+                <div className="relative bg-white/15 backdrop-blur-xl rounded-3xl p-8 border border-white/30 hover:border-white/50 transition-all duration-500 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/20">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-success to-accent rounded-2xl flex items-center justify-center shadow-lg">
+                      <Award className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-4xl md:text-5xl font-bold text-white mb-1 font-cairo">5+</div>
+                      <div className="w-12 h-1 bg-gradient-to-r from-success to-accent rounded-full ml-auto"></div>
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2 font-cairo">سنوات خبرة</h3>
+                  <p className="text-white/80 text-sm font-cairo leading-relaxed">خبرة عريقة في مجال التدريب والتطوير المهني</p>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
