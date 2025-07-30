@@ -4,6 +4,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RoleManager } from '@/components/admin/RoleManager';
 import { CourseManager } from '@/components/admin/CourseManager';
 import { LessonManager } from '@/components/admin/LessonManager';
+import { PaymentManager } from '@/components/admin/PaymentManager';
+import { usePayment } from '@/contexts/PaymentContext';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -11,6 +13,7 @@ import { Users, BookOpen, DollarSign, Settings, LogOut } from 'lucide-react';
 
 export default function AdminDashboard() {
   const { state, hasRole, signOut } = useAuth();
+  const { getAllTransactions, getPendingTransactions } = usePayment();
 
   if (!state.isAuthenticated || !hasRole('admin')) {
     return <Navigate to="/auth-supabase" replace />;
@@ -72,7 +75,7 @@ export default function AdminDashboard() {
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">0</div>
+              <div className="text-2xl font-bold">{getPendingTransactions().length}</div>
               <p className="text-xs text-muted-foreground font-cairo">معاملة في الانتظار</p>
             </CardContent>
           </Card>
@@ -111,17 +114,7 @@ export default function AdminDashboard() {
           </TabsContent>
 
           <TabsContent value="payments" className="mt-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="font-cairo">إدارة المدفوعات</CardTitle>
-                <CardDescription className="font-cairo">
-                  مراجعة وتأكيد المدفوعات المرسلة من الطلاب
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground font-cairo">قريباً...</p>
-              </CardContent>
-            </Card>
+            <PaymentManager />
           </TabsContent>
 
           <TabsContent value="settings" className="mt-6">

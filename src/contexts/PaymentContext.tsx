@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
 import { PaymentTransaction } from '@/types/payment';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 
 interface PaymentState {
   transactions: PaymentTransaction[];
@@ -66,7 +68,9 @@ interface PaymentContextType {
   rejectPayment: (transactionId: string, adminId: string, reason: string) => Promise<boolean>;
   getUserTransactions: (userId: string) => PaymentTransaction[];
   getPendingTransactions: () => PaymentTransaction[];
+  getAllTransactions: () => PaymentTransaction[];
   getTransactionByCourse: (userId: string, courseId: string) => PaymentTransaction | null;
+  loadTransactions: () => Promise<void>;
   clearError: () => void;
 }
 
@@ -80,20 +84,22 @@ export const usePayment = () => {
   return context;
 };
 
-// Mock transactions for development
-const mockTransactions: PaymentTransaction[] = [
-  {
-    id: '1',
-    userId: '1',
-    courseId: 'self-development-leadership',
-    transactionId: '1234',
-    amount: 150,
-    currency: 'SDG',
-    status: 'verification_submitted',
-    submittedAt: '2024-01-20T10:30:00Z',
-    notes: 'تم التحويل عبر الهاتف المصرفي'
-  }
-];
+// Helper function to convert database row to PaymentTransaction
+const dbRowToTransaction = (row: any): PaymentTransaction => ({
+  id: row.id,
+  userId: row.user_id,
+  courseId: row.course_id,
+  transactionId: row.transaction_id,
+  amount: Number(row.amount),
+  currency: row.currency,
+  status: row.status,
+  receiptImage: row.receipt_image_url,
+  submittedAt: row.submitted_at,
+  verifiedAt: row.verified_at,
+  verifiedBy: row.verified_by,
+  rejectionReason: row.rejection_reason,
+  notes: row.notes
+});
 
 interface PaymentProviderProps {
   children: ReactNode;
@@ -101,29 +107,33 @@ interface PaymentProviderProps {
 
 export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(paymentReducer, initialState);
+  const { state: authState } = useAuth();
 
-  // Load transactions from localStorage on mount
-  useEffect(() => {
-    const loadTransactions = () => {
-      try {
-        const savedTransactions = localStorage.getItem('payment_transactions');
-        const transactions = savedTransactions ? JSON.parse(savedTransactions) : mockTransactions;
-        dispatch({ type: 'SET_TRANSACTIONS', payload: transactions });
-      } catch (error) {
-        console.error('Error loading transactions:', error);
-        dispatch({ type: 'SET_TRANSACTIONS', payload: mockTransactions });
-      }
-    };
+  // Load transactions from database
+  const loadTransactions = async () => {
+    dispatch({ type: 'SET_LOADING', payload: true });
+    try {
+      const { data, error } = await supabase
+        .from('payments')
+        .select('*')
+        .order('submitted_at', { ascending: false });
 
-    loadTransactions();
-  }, []);
+      if (error) throw error;
 
-  // Save transactions to localStorage whenever they change
-  useEffect(() => {
-    if (state.transactions.length > 0) {
-      localStorage.setItem('payment_transactions', JSON.stringify(state.transactions));
+      const transactions = data?.map(dbRowToTransaction) || [];
+      dispatch({ type: 'SET_TRANSACTIONS', payload: transactions });
+    } catch (error) {
+      console.error('Error loading transactions:', error);
+      dispatch({ type: 'SET_ERROR', payload: 'خطأ في تحميل المعاملات' });
     }
-  }, [state.transactions]);
+  };
+
+  // Load transactions on mount
+  useEffect(() => {
+    if (authState.isAuthenticated) {
+      loadTransactions();
+    }
+  }, [authState.isAuthenticated]);
 
   const submitPaymentVerification = async (
     courseId: string,
@@ -131,30 +141,47 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
     receiptImage?: string,
     notes?: string
   ): Promise<boolean> => {
+    if (!authState.user?.id) {
+      toast.error('يجب تسجيل الدخول أولاً');
+      return false;
+    }
+
     dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Get course details to get the price
+      const { data: courseData, error: courseError } = await supabase
+        .from('courses')
+        .select('price')
+        .eq('id', courseId)
+        .single();
 
-      // Create new transaction
-      const newTransaction: PaymentTransaction = {
-        id: Date.now().toString(),
-        userId: '1', // This would come from auth context
-        courseId,
-        transactionId,
-        amount: 150, // This would come from course data
-        currency: 'SDG',
-        status: 'verification_submitted',
-        receiptImage,
-        submittedAt: new Date().toISOString(),
-        notes
-      };
+      if (courseError) throw courseError;
 
+      // Insert payment record
+      const { data, error } = await supabase
+        .from('payments')
+        .insert({
+          user_id: authState.user.id,
+          course_id: courseId,
+          transaction_id: transactionId,
+          amount: courseData.price,
+          currency: 'SDG',
+          status: 'verification_submitted',
+          receipt_image_url: receiptImage,
+          notes
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      const newTransaction = dbRowToTransaction(data);
       dispatch({ type: 'ADD_TRANSACTION', payload: newTransaction });
       toast.success('تم إرسال طلب التحقق من الدفعة بنجاح!');
       return true;
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Error submitting payment:', error);
       dispatch({ type: 'SET_ERROR', payload: 'حدث خطأ أثناء إرسال طلب التحقق' });
       toast.error('حدث خطأ أثناء إرسال طلب التحقق');
       return false;
@@ -165,7 +192,32 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
     dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const { error } = await supabase
+        .from('payments')
+        .update({
+          status: 'verified',
+          verified_at: new Date().toISOString(),
+          verified_by: adminId
+        })
+        .eq('id', transactionId);
+
+      if (error) throw error;
+
+      // Also enroll the user in the course
+      const payment = state.transactions.find(t => t.id === transactionId);
+      if (payment) {
+        const { error: enrollError } = await supabase
+          .from('course_enrollments')
+          .insert({
+            user_id: payment.userId,
+            course_id: payment.courseId,
+            enrolled_at: new Date().toISOString()
+          });
+
+        if (enrollError && enrollError.code !== '23505') { // Ignore duplicate key error
+          console.error('Error enrolling user:', enrollError);
+        }
+      }
 
       dispatch({
         type: 'UPDATE_TRANSACTION',
@@ -179,10 +231,12 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
         }
       });
 
-      toast.success('تم تأكيد الدفعة بنجاح!');
+      toast.success('تم تأكيد الدفعة وتسجيل الطالب في الدورة بنجاح!');
       return true;
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Error verifying payment:', error);
       dispatch({ type: 'SET_ERROR', payload: 'حدث خطأ أثناء تأكيد الدفعة' });
+      toast.error('حدث خطأ أثناء تأكيد الدفعة');
       return false;
     }
   };
@@ -191,7 +245,17 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
     dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const { error } = await supabase
+        .from('payments')
+        .update({
+          status: 'rejected',
+          verified_at: new Date().toISOString(),
+          verified_by: adminId,
+          rejection_reason: reason
+        })
+        .eq('id', transactionId);
+
+      if (error) throw error;
 
       dispatch({
         type: 'UPDATE_TRANSACTION',
@@ -208,8 +272,10 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
 
       toast.success('تم رفض الدفعة');
       return true;
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Error rejecting payment:', error);
       dispatch({ type: 'SET_ERROR', payload: 'حدث خطأ أثناء رفض الدفعة' });
+      toast.error('حدث خطأ أثناء رفض الدفعة');
       return false;
     }
   };
@@ -220,6 +286,10 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
 
   const getPendingTransactions = (): PaymentTransaction[] => {
     return state.transactions.filter(transaction => transaction.status === 'verification_submitted');
+  };
+
+  const getAllTransactions = (): PaymentTransaction[] => {
+    return state.transactions;
   };
 
   const getTransactionByCourse = (userId: string, courseId: string): PaymentTransaction | null => {
@@ -239,7 +309,9 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
     rejectPayment,
     getUserTransactions,
     getPendingTransactions,
+    getAllTransactions,
     getTransactionByCourse,
+    loadTransactions,
     clearError
   };
 

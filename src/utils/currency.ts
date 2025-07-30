@@ -41,6 +41,15 @@ export const comparePrices = (priceA: string, priceB: string): number => {
   return numA - numB;
 };
 
+// دالة لتنسيق المبالغ مع العملة
+export const formatCurrency = (amount: number, currency: string = 'SDG'): string => {
+  return new Intl.NumberFormat('ar-SD', {
+    style: 'decimal',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(amount) + ' ' + (currency === 'SDG' ? CURRENCY.symbol : currency);
+};
+
 // تحويل السعر إلى عملات أخرى (للمستقبل)
 export const convertCurrency = (sdgAmount: number, targetCurrency: string): number => {
   // معدلات تحويل تقريبية (يجب تحديثها من API حقيقي)
