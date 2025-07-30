@@ -169,20 +169,22 @@ export const SupabaseAuthProvider: React.FC<AuthProviderProps> = ({ children }) 
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         if (session?.user) {
-          try {
-            const appUser = await loadUserData(session.user);
-            dispatch({ 
-              type: 'AUTH_SUCCESS', 
-              payload: { user: appUser, session } 
+          // Use setTimeout to prevent deadlock
+          setTimeout(() => {
+            loadUserData(session.user).then((appUser) => {
+              dispatch({ 
+                type: 'AUTH_SUCCESS', 
+                payload: { user: appUser, session } 
+              });
+            }).catch((error) => {
+              dispatch({ 
+                type: 'AUTH_FAILURE', 
+                payload: 'فشل في تحميل بيانات المستخدم' 
+              });
             });
-          } catch (error) {
-            dispatch({ 
-              type: 'AUTH_FAILURE', 
-              payload: 'فشل في تحميل بيانات المستخدم' 
-            });
-          }
+          }, 0);
         } else {
           dispatch({ type: 'AUTH_LOGOUT' });
         }
