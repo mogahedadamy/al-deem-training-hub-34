@@ -33,7 +33,8 @@ const TeamSection = () => {
       specialization: "التطوير المهني",
       experience: "12+ سنة خبرة",
       icon: BookOpen,
-      gradient: "from-accent to-secondary"
+      gradient: "from-accent to-secondary",
+      photo: "/lovable-uploads/f393a4e7-823b-4289-a00b-705a7b72c8c5.png"
     },
     {
       name: "م. عمر التهامي",
