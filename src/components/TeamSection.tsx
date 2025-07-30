@@ -98,16 +98,24 @@ const TeamSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 animate-fade-in" style={{ animationDelay: "0.3s" }}>
           {trainers.map((trainer, index) => (
-            <Card key={index} className="group border-0 shadow-card hover:shadow-elegant transition-all duration-500 hover:scale-105 bg-gradient-card">
+            <Card key={index} className="group border-0 shadow-card hover:shadow-elegant transition-all duration-500 hover:scale-105 bg-gradient-card overflow-hidden">
               <CardContent className="p-6 md:p-8">
                 <div className="text-center">
                   {trainer.photo ? (
-                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden shadow-hover group-hover:shadow-glow transition-all duration-300 mb-6 mx-auto border-2 border-primary/20">
-                      <img 
-                        src={trainer.photo} 
-                        alt={trainer.name}
-                        className="w-full h-full object-cover"
-                      />
+                    <div className="relative mb-6 mx-auto">
+                      <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden shadow-elegant group-hover:shadow-glow transition-all duration-300 mx-auto border-4 border-primary/20 group-hover:border-primary/40">
+                        <img 
+                          src={trainer.photo} 
+                          alt={trainer.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                      {/* Badge overlay */}
+                      <div className="absolute -bottom-2 -right-2">
+                        <div className={`bg-gradient-to-r ${trainer.gradient} p-2 rounded-full shadow-hover group-hover:shadow-glow transition-all duration-300`}>
+                          <trainer.icon className="w-4 h-4 text-white drop-shadow-sm" />
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <div className={`bg-gradient-to-r ${trainer.gradient} p-4 rounded-2xl shadow-hover group-hover:shadow-glow transition-all duration-300 mb-6 mx-auto w-fit`}>
@@ -115,23 +123,29 @@ const TeamSection = () => {
                     </div>
                   )}
                   
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300 font-cairo">
-                    {trainer.name}
-                  </h3>
-                  
-                  <p className="text-primary font-semibold mb-3 font-cairo">
-                    {trainer.title}
-                  </p>
-                  
-                  <p className="text-muted-foreground mb-3 font-cairo leading-relaxed">
-                    {trainer.specialization}
-                  </p>
-                  
-                  <div className="inline-flex items-center gap-2 bg-gradient-primary/10 rounded-full px-4 py-2">
-                    <Award className="w-4 h-4 text-primary" />
-                    <span className="text-sm text-primary font-medium font-cairo">
-                      {trainer.experience}
-                    </span>
+                  <div className="space-y-3">
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 font-cairo leading-tight">
+                      {trainer.name}
+                    </h3>
+                    
+                    <div className="space-y-2">
+                      <p className="text-primary font-semibold text-lg font-cairo">
+                        {trainer.title}
+                      </p>
+                      
+                      <p className="text-muted-foreground text-base font-cairo leading-relaxed">
+                        {trainer.specialization}
+                      </p>
+                    </div>
+                    
+                    <div className="pt-2">
+                      <div className="inline-flex items-center gap-2 bg-gradient-primary/10 hover:bg-gradient-primary/20 rounded-full px-4 py-2 transition-all duration-300">
+                        <Award className="w-4 h-4 text-primary" />
+                        <span className="text-sm text-primary font-medium font-cairo">
+                          {trainer.experience}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>
