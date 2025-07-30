@@ -141,7 +141,7 @@ export const PaymentProvider: React.FC<PaymentProviderProps> = ({ children }) =>
     receiptImage?: string,
     notes?: string
   ): Promise<boolean> => {
-    if (!authState.user?.id) {
+    if (!authState.user) {
       toast.error('يجب تسجيل الدخول أولاً');
       return false;
     }
