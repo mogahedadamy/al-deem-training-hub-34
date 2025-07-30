@@ -93,6 +93,17 @@ const CoursesSection = () => {
                   </Badge>
                 </div>}
 
+              {/* Course Thumbnail */}
+              {course.thumbnail && (
+                <div className="h-48 md:h-56 overflow-hidden">
+                  <img 
+                    src={course.thumbnail} 
+                    alt={course.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+              )}
+
               <CardHeader className="pb-2 md:pb-4 relative p-3 md:p-6">
                 <div className="flex items-center justify-between mb-2 md:mb-6">
                   <div className={`bg-gradient-to-r ${course.gradient} p-2 md:p-4 rounded-lg md:rounded-2xl shadow-hover group-hover:shadow-glow transition-all duration-300 flex-shrink-0`}>

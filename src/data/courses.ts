@@ -149,6 +149,7 @@ export const courses: Course[] = [
     students: 45,
     badge: "متقدم",
     gradient: "from-secondary to-accent",
+    thumbnail: "/lovable-uploads/064978ee-09d1-48d3-bd6f-69f8b627cf3d.png",
     features: [
       "الإدارة الاستراتيجية",
       "التسويق والمبيعات",
@@ -419,6 +420,7 @@ export const courses: Course[] = [
     students: 105,
     badge: "معتمد",
     gradient: "from-accent to-secondary",
+    thumbnail: "/lovable-uploads/7161ea27-f60d-4df8-ad08-08cac1a92e2c.png",
     features: [
       "مبادئ الجودة الشاملة",
       "أدوات الجودة",
@@ -644,6 +646,7 @@ export const courses: Course[] = [
     students: 90,
     badge: "تطبيقي",
     gradient: "from-secondary to-accent",
+    thumbnail: "/lovable-uploads/5bf4061e-4070-45c6-a8a7-e5a65a3a1b6d.png",
     features: [
       "أنظمة إدارة المخازن",
       "المحاسبة المالية",

@@ -12,6 +12,7 @@ export interface Course {
   students: number;
   badge?: string;
   gradient: string;
+  thumbnail?: string;
   features: string[];
   instructor: {
     name: string;
