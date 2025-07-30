@@ -4,97 +4,33 @@ import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden -mt-16 md:-mt-20 border-b border-gradient-primary/20">
-      {/* Background Image with Enhanced Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-hero"></div>
-      </div>
-      
-      {/* Enhanced Floating Elements */}
-      <div className="absolute top-20 right-10 md:left-10 animate-float opacity-60">
-        <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-3 md:p-4 shadow-glow">
-          <BookOpen className="w-7 h-7 md:w-9 md:h-9 text-primary drop-shadow-lg" />
-        </div>
-      </div>
-      <div className="absolute top-40 left-16 md:right-16 animate-float opacity-60" style={{ animationDelay: "1s" }}>
-        <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-2 md:p-3 shadow-glow">
-          <Users className="w-6 h-6 md:w-7 md:h-7 text-accent drop-shadow-lg" />
-        </div>
-      </div>
-      <div className="absolute bottom-32 right-20 md:left-20 animate-float opacity-60" style={{ animationDelay: "2s" }}>
-        <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-3 md:p-4 shadow-glow">
-          <Award className="w-7 h-7 md:w-8 md:h-8 text-primary drop-shadow-lg" />
-        </div>
-      </div>
-      <div className="absolute top-60 left-32 md:right-32 animate-float opacity-50" style={{ animationDelay: "0.5s" }}>
-        <div className="bg-gradient-accent rounded-full p-2 md:p-3">
-          <Star className="w-4 h-4 md:w-5 md:h-5 text-white" />
-        </div>
-      </div>
-      <div className="absolute bottom-60 left-10 md:right-10 animate-float opacity-50" style={{ animationDelay: "1.5s" }}>
-        <div className="bg-gradient-primary rounded-full p-2">
-          <Zap className="w-3 h-3 md:w-4 md:h-4 text-white" />
+    <section id="home" className="relative min-h-screen flex items-center justify-center bg-white -mt-16 md:-mt-20 border-b border-border">
+      {/* Certificate image in top right */}
+      <div className="absolute top-20 right-10 lg:right-20">
+        <div className="bg-white rounded-lg shadow-soft p-4">
+          <img src="/lovable-uploads/0b3967cc-2fe1-4e5d-bf68-28ca5fe57a34.png" alt="Certificate" className="w-32 md:w-48 lg:w-64 object-contain" />
         </div>
       </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 md:px-8 text-center pt-16 md:pt-20">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-6 md:mb-8 animate-fade-in">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3 border border-white/20 mb-4 md:mb-6">
-              <TrendingUp className="w-5 h-5 md:w-6 md:h-6 text-primary drop-shadow-sm" />
-              <span className="text-white font-medium text-sm md:text-base font-cairo">مركز التدريب الأول في السودان</span>
-            </div>
-          </div>
-          
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-6 md:mb-8 animate-fade-in leading-tight font-cairo">
-            مركز <span className="bg-gradient-accent bg-clip-text text-transparent">العميد</span> للتدريب المتقدم
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-primary mb-4 md:mb-6 animate-fade-in leading-tight font-cairo">
+            كلمة المؤسس
           </h1>
           
-          <p className="text-lg md:text-2xl lg:text-3xl text-white/95 mb-8 md:mb-12 animate-fade-in font-light leading-relaxed font-cairo px-4" style={{ animationDelay: "0.2s" }}>
-            نقدم دورات تدريبية متخصصة في التطوير الإداري والقيادي والتثقيفي مع فريق من الخبراء المعتمدين
+          <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto mb-8 md:mb-12 animate-fade-in leading-relaxed font-cairo px-4" style={{ animationDelay: "0.2s" }}>
+            نحن في مركز العميد للتدريب المتقدم، نؤمن بأن التطوير المستمر هو مفتاح النجاح. نسعى لتقديم أفضل البرامج التدريبية التي تساهم في بناء جيل قادر على مواجهة تحديات المستقبل
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center animate-fade-in px-4" style={{ animationDelay: "0.4s" }}>
-            <Button size="lg" className="w-full sm:w-auto text-lg md:text-xl px-8 md:px-10 py-3 md:py-4 bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all duration-300 border-0 shadow-elegant font-cairo">
+            <Button size="lg" className="w-full sm:w-auto text-lg md:text-xl px-8 md:px-10 py-3 md:py-4 bg-accent hover:bg-accent/90 transition-all duration-300 text-white font-cairo">
               <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 ml-3 md:ml-4" />
               استكشف دوراتنا
             </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg md:text-xl px-8 md:px-10 py-3 md:py-4 border-2 border-white/30 text-white hover:bg-white hover:text-secondary backdrop-blur-sm bg-white/10 transition-all duration-300 font-cairo">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg md:text-xl px-8 md:px-10 py-3 md:py-4 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 font-cairo">
               تواصل معنا
             </Button>
-          </div>
-
-          {/* Enhanced Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8 mt-12 md:mt-20 animate-fade-in px-4" style={{ animationDelay: "0.6s" }}>
-            <div className="group hover:scale-105 transition-all duration-300">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/20 shadow-elegant hover:shadow-glow hover:bg-white/20">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-3 bg-gradient-accent bg-clip-text text-transparent font-cairo">500+</div>
-                <div className="text-white/90 text-base md:text-lg font-medium font-cairo">متدرب نجح معنا</div>
-                <div className="text-white/70 text-xs md:text-sm mt-1 font-cairo">في مختلف المجالات</div>
-              </div>
-            </div>
-            <div className="group hover:scale-105 transition-all duration-300">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/20 shadow-elegant hover:shadow-glow hover:bg-white/20">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-3 bg-gradient-accent bg-clip-text text-transparent font-cairo">50+</div>
-                <div className="text-white/90 text-base md:text-lg font-medium font-cairo">دورة تدريبية</div>
-                <div className="text-white/70 text-xs md:text-sm mt-1 font-cairo">معتمدة ومتطورة</div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Third stat below grid on mobile */}
-          <div className="flex justify-center mt-4 md:mt-0 animate-fade-in px-4" style={{ animationDelay: "0.6s" }}>
-            <div className="group hover:scale-105 transition-all duration-300 w-full max-w-xs md:max-w-none">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/20 shadow-elegant hover:shadow-glow hover:bg-white/20">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-3 bg-gradient-accent bg-clip-text text-transparent font-cairo">5+</div>
-                <div className="text-white/90 text-base md:text-lg font-medium font-cairo">سنوات خبرة</div>
-                <div className="text-white/70 text-xs md:text-sm mt-1 font-cairo">في التدريب المهني</div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

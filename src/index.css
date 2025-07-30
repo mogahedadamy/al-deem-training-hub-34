@@ -17,27 +17,27 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    /* Enhanced Alameed Brand Colors - Balanced Professional Theme */
-    --primary: 25 60% 45%; /* Professional warm brown */
+    /* Clean Professional Theme - Minimal Colors */
+    --primary: 220 13% 18%; /* Dark professional gray */
     --primary-foreground: 0 0% 100%;
-    --primary-dark: 25 70% 30%; /* Rich chocolate brown */
-    --primary-light: 25 40% 70%; /* Soft taupe */
+    --primary-dark: 220 15% 10%; /* Darker gray */
+    --primary-light: 220 13% 60%; /* Medium gray */
 
-    --secondary: 200 40% 60%; /* Calming blue-gray for contrast */
+    --secondary: 220 9% 46%; /* Neutral gray for text */
     --secondary-foreground: 0 0% 100%;
-    --secondary-light: 200 30% 80%; /* Light blue-gray */
+    --secondary-light: 220 13% 80%; /* Light gray */
 
-    --muted: 220 15% 96%; /* Cool light gray */
-    --muted-foreground: 220 10% 45%; /* Medium gray for text */
+    --muted: 220 13% 95%; /* Very light gray */
+    --muted-foreground: 220 9% 46%; /* Medium gray for text */
 
-    --accent: 35 80% 55%; /* Vibrant orange accent */
+    --accent: 24 100% 50%; /* Orange accent for icons only */
     --accent-foreground: 0 0% 100%;
     
-    /* Success and info colors for variety */
-    --success: 145 60% 45%; /* Professional green */
+    /* Success and info colors for icons only */
+    --success: 142 76% 36%; /* Green for icons */
     --success-foreground: 0 0% 100%;
     
-    --info: 210 100% 65%; /* Clear blue */
+    --info: 221 83% 53%; /* Blue for icons */
     --info-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -47,18 +47,18 @@ All colors MUST be HSL.
     --input: 0 0% 91%;
     --ring: 30 45% 35%; /* Brown ring to match primary */
 
-    /* Advanced design tokens - Balanced Professional Theme */
-    --gradient-primary: linear-gradient(135deg, hsl(25 60% 45%), hsl(35 80% 55%));
-    --gradient-hero: linear-gradient(135deg, hsl(25 70% 30% / 0.9), hsl(200 40% 60% / 0.1));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 15% 98%));
-    --gradient-accent: linear-gradient(45deg, hsl(35 80% 55%), hsl(25 60% 45%));
-    --gradient-secondary: linear-gradient(120deg, hsl(200 40% 60%), hsl(200 30% 80%));
+    /* Clean minimal gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 13% 18%), hsl(220 15% 25%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 15% 10% / 0.8), hsl(220 13% 18% / 0.1));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 13% 98%));
+    --gradient-accent: linear-gradient(45deg, hsl(24 100% 50%), hsl(38 100% 55%));
+    --gradient-secondary: linear-gradient(120deg, hsl(220 9% 46%), hsl(220 13% 60%));
     
-    --shadow-elegant: 0 20px 40px -12px hsl(25 60% 45% / 0.25);
-    --shadow-card: 0 8px 25px -8px hsl(220 10% 45% / 0.12);
-    --shadow-hover: 0 15px 45px -12px hsl(25 60% 45% / 0.3);
-    --shadow-glow: 0 0 50px hsl(35 80% 55% / 0.4);
-    --shadow-soft: 0 4px 15px -3px hsl(220 15% 50% / 0.1);
+    --shadow-elegant: 0 20px 40px -12px hsl(220 13% 18% / 0.15);
+    --shadow-card: 0 8px 25px -8px hsl(220 10% 45% / 0.08);
+    --shadow-hover: 0 15px 45px -12px hsl(220 13% 18% / 0.2);
+    --shadow-glow: 0 0 50px hsl(24 100% 50% / 0.2);
+    --shadow-soft: 0 4px 15px -3px hsl(220 15% 50% / 0.06);
     
     /* Icon specific tokens for professional appearance */
     --icon-size-xs: 0.875rem; /* 14px */
