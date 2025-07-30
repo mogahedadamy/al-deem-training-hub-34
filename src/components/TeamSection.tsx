@@ -41,7 +41,8 @@ const TeamSection = () => {
       specialization: "الهندسة والإدارة",
       experience: "10+ سنة خبرة",
       icon: Award,
-      gradient: "from-secondary to-primary"
+      gradient: "from-secondary to-primary",
+      photo: "/lovable-uploads/a4d89071-b28a-4468-a44d-34ba95f181e6.png"
     },
     {
       name: "د. أحمد موسى",
