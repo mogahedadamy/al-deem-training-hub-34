@@ -20,7 +20,7 @@ import {
 import { courses } from '@/data/courses';
 import { bankDetails, paymentInstructions } from '@/data/bank';
 import { usePayment } from '@/contexts/PaymentContext';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { formatPrice } from '@/utils/currency';
 import { toast } from 'sonner';
 
