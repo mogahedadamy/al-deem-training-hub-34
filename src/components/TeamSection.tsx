@@ -76,6 +76,23 @@ const TeamSection = () => {
           <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto animate-fade-in leading-relaxed font-cairo px-4" style={{ animationDelay: "0.2s" }}>
             فريق متميز من الأكاديميين والخبراء المعتمدين في مختلف المجالات التدريبية والإدارية
           </p>
+          
+          {/* صورة الفريق والأنشطة */}
+          <div className="mt-8 md:mt-12 animate-fade-in" style={{ animationDelay: "0.25s" }}>
+            <div className="relative max-w-4xl mx-auto">
+              <img 
+                src="/lovable-uploads/296bded3-68f3-4512-8b3b-de7cfeb9cbe3.png" 
+                alt="فريق مركز العميد للتدريب المتقدم وأنشطته التدريبية"
+                className="w-full h-auto rounded-2xl shadow-elegant border border-primary/20 hover:shadow-glow transition-all duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent rounded-2xl"></div>
+              <div className="absolute bottom-4 left-4 right-4 text-center">
+                <p className="text-sm md:text-base font-medium text-white bg-primary/90 backdrop-blur-sm px-4 py-2 md:px-6 md:py-3 rounded-lg inline-block shadow-elegant font-cairo">
+                  فريق من الخبراء والمتخصصين
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 animate-fade-in" style={{ animationDelay: "0.3s" }}>
