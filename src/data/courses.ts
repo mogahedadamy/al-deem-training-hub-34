@@ -601,6 +601,52 @@ export const courses: Course[] = [
     prerequisites: ["خبرة في التدريب أو التعليم"]
   },
   {
+    id: "organization-management", 
+    title: "إدارة المنظمات",
+    description: "تعلم أساسيات إدارة المنظمات والتطوير التنظيمي",
+    icon: TrendingUp,
+    duration: "أسبوع واحد",
+    level: "متوسط",
+    price: "40,000 ج.س",
+    rating: 4.7,
+    students: 95,
+    badge: "إداري",
+    gradient: "from-secondary to-primary",
+    thumbnail: "/lovable-uploads/34a71433-8f6a-4169-aab3-1888301d9e67.png",
+    features: [
+      "الهيكل التنظيمي",
+      "إدارة التغيير",
+      "التطوير التنظيمي",
+      "القيادة الإدارية"
+    ],
+    instructor: {
+      name: "أ. الهادي علي",
+      avatar: "/instructors/hadi-ali.jpg",
+      bio: "خبير في إدارة المنظمات والتطوير التنظيمي",
+      experience: "16 سنة"
+    },
+    lessons: [
+      {
+        id: "org-lesson-1",
+        title: "أساسيات إدارة المنظمات",
+        description: "مفهوم المنظمة وأسس الإدارة الحديثة",
+        duration: 60,
+        type: "video",
+        content: {
+          videoUrl: "https://www.youtube.com/watch?v=org1",
+          textContent: "إدارة المنظمات فن وعلم في آن واحد..."
+        },
+        isCompleted: false,
+        order: 1
+      }
+    ],
+    category: "الإدارة",
+    language: "العربية", 
+    totalHours: 35,
+    certificate: true,
+    prerequisites: []
+  },
+  {
     id: "strategic-planning",
     title: "التخطيط الاستراتيجي وإعداد الخطط التنفيذية",
     description: "تعلم فن التخطيط الاستراتيجي وتحويل الرؤى إلى خطط قابلة للتنفيذ",
