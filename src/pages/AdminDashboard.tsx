@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RoleManager } from '@/components/admin/RoleManager';
 import { CourseManager } from '@/components/admin/CourseManager';
 import { LessonManager } from '@/components/admin/LessonManager';
+import PriceManager from '@/components/admin/PriceManager';
 import { PaymentManager } from '@/components/admin/PaymentManager';
 import { usePayment } from '@/contexts/PaymentContext';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
@@ -93,10 +94,11 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="users" className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="users" className="font-cairo">المستخدمين</TabsTrigger>
             <TabsTrigger value="courses" className="font-cairo">الدورات</TabsTrigger>
             <TabsTrigger value="lessons" className="font-cairo">الدروس</TabsTrigger>
+            <TabsTrigger value="prices" className="font-cairo">الأسعار</TabsTrigger>
             <TabsTrigger value="payments" className="font-cairo">المدفوعات</TabsTrigger>
             <TabsTrigger value="settings" className="font-cairo">الإعدادات</TabsTrigger>
           </TabsList>
@@ -111,6 +113,10 @@ export default function AdminDashboard() {
 
           <TabsContent value="lessons" className="mt-6">
             <LessonManager />
+          </TabsContent>
+
+          <TabsContent value="prices" className="mt-6">
+            <PriceManager />
           </TabsContent>
 
           <TabsContent value="payments" className="mt-6">
