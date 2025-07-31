@@ -203,14 +203,14 @@ const MyPayments = () => {
                       <div>
                         <span className="text-muted-foreground font-cairo">تاريخ الإرسال:</span>
                         <p className="font-medium font-cairo">
-                          {new Date(transaction.submittedAt).toLocaleDateString('ar-SA')}
+                          {new Date(transaction.submittedAt).toLocaleDateString('ar-EG')}
                         </p>
                       </div>
                       {transaction.verifiedAt && (
                         <div>
                           <span className="text-muted-foreground font-cairo">تاريخ التأكيد:</span>
                           <p className="font-medium font-cairo">
-                            {new Date(transaction.verifiedAt).toLocaleDateString('ar-SA')}
+                            {new Date(transaction.verifiedAt).toLocaleDateString('ar-EG')}
                           </p>
                         </div>
                       )}

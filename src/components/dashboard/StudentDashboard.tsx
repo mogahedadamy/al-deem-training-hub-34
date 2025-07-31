@@ -146,7 +146,7 @@ export const StudentDashboard = () => {
     if (diffInHours < 24) return `منذ ${diffInHours} ساعة`;
     const diffInDays = Math.floor(diffInHours / 24);
     if (diffInDays < 7) return `منذ ${diffInDays} يوم`;
-    return date.toLocaleDateString('ar-SA');
+    return date.toLocaleDateString('ar-EG');
   };
 
   if (isLoading) {

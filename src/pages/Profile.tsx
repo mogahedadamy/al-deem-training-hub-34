@@ -94,7 +94,7 @@ const Profile = () => {
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  <span className="font-cairo">انضم في {new Date().toLocaleDateString('ar-SA')}</span>
+                  <span className="font-cairo">انضم في {new Date().toLocaleDateString('ar-EG')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-4 h-4" />

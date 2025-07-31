@@ -134,7 +134,7 @@ export const PaymentManager = () => {
     const csvContent = [
       ['التاريخ', 'الطالب', 'البريد الإلكتروني', 'الدورة', 'رقم المعاملة', 'المبلغ', 'الحالة'],
       ...filteredTransactions.map(transaction => [
-        new Date(transaction.submittedAt).toLocaleDateString('ar-SA'),
+        new Date(transaction.submittedAt).toLocaleDateString('ar-EG'),
         students[transaction.userId]?.full_name || 'غير معروف',
         students[transaction.userId]?.email || 'غير متاح',
         courses[transaction.courseId]?.title || 'غير معروف',
@@ -299,7 +299,7 @@ export const PaymentManager = () => {
                           <span className="font-medium">المبلغ:</span> {formatCurrency(transaction.amount, transaction.currency)}
                         </p>
                         <p className="font-cairo">
-                          <span className="font-medium">تاريخ الإرسال:</span> {new Date(transaction.submittedAt).toLocaleDateString('ar-SA')}
+                          <span className="font-medium">تاريخ الإرسال:</span> {new Date(transaction.submittedAt).toLocaleDateString('ar-EG')}
                         </p>
                       </div>
                       

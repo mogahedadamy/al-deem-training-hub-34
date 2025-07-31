@@ -409,7 +409,7 @@ const AdminPayments = () => {
                             </div>
                             <div className="col-span-2">
                               <p className="text-muted-foreground font-cairo">تاريخ الإرسال</p>
-                              <p className="font-cairo">{new Date(transaction.submittedAt).toLocaleDateString('ar-SA')}</p>
+                              <p className="font-cairo">{new Date(transaction.submittedAt).toLocaleDateString('ar-EG')}</p>
                             </div>
                           </div>
                         </div>
@@ -436,7 +436,7 @@ const AdminPayments = () => {
                       </td>
                       <td className="p-2 sm:p-4 hidden sm:table-cell">
                         <span className="text-xs sm:text-sm text-muted-foreground font-cairo">
-                          {new Date(transaction.submittedAt).toLocaleDateString('ar-SA')}
+                          {new Date(transaction.submittedAt).toLocaleDateString('ar-EG')}
                         </span>
                       </td>
                       <td className="p-2 sm:p-4 text-center hidden sm:table-cell">
@@ -484,7 +484,7 @@ const AdminPayments = () => {
                                   <div>
                                     <Label className="font-cairo">تاريخ الإرسال</Label>
                                     <p className="font-cairo">
-                                      {new Date(selectedTransaction.submittedAt).toLocaleString('ar-SA')}
+                                      {new Date(selectedTransaction.submittedAt).toLocaleString('ar-EG')}
                                     </p>
                                   </div>
                                 </div>
@@ -558,7 +558,7 @@ const AdminPayments = () => {
                                     </div>
                                     {selectedTransaction.verifiedAt && (
                                       <p className="text-sm text-muted-foreground font-cairo">
-                                        تمت المعالجة في: {new Date(selectedTransaction.verifiedAt).toLocaleString('ar-SA')}
+                                        تمت المعالجة في: {new Date(selectedTransaction.verifiedAt).toLocaleString('ar-EG')}
                                       </p>
                                     )}
                                     {selectedTransaction.rejectionReason && (
@@ -655,7 +655,7 @@ const AdminPayments = () => {
                       <div className="text-left">
                         {getStatusBadge(transaction.status)}
                         <p className="text-xs text-muted-foreground font-cairo mt-1">
-                          {new Date(transaction.submittedAt).toLocaleDateString('ar-SA')}
+                          {new Date(transaction.submittedAt).toLocaleDateString('ar-EG')}
                         </p>
                       </div>
                     </div>
@@ -807,7 +807,7 @@ const AdminPayments = () => {
                             </Badge>
                           </TableCell>
                           <TableCell className="font-cairo text-xs sm:text-sm">
-                            {new Date(user.joinDate).toLocaleDateString('ar-SA')}
+                            {new Date(user.joinDate).toLocaleDateString('ar-EG')}
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center gap-1 sm:gap-2">
@@ -958,7 +958,7 @@ const AdminPayments = () => {
                 {/* Join Date */}
                 <div className="text-center pt-4 border-t">
                   <p className="font-cairo text-sm text-muted-foreground">
-                    عضو منذ {new Date(selectedUser.joinDate).toLocaleDateString('ar-SA', {
+                    عضو منذ {new Date(selectedUser.joinDate).toLocaleDateString('ar-EG', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric'
