@@ -88,20 +88,7 @@ export const YouTubePlayer = ({
           </Button>
         </div>
 
-        <div className="absolute bottom-4 right-4">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(videoUrl, '_blank');
-            }}
-            className="flex items-center gap-2"
-          >
-            <ExternalLink size={16} />
-            فتح في YouTube
-          </Button>
-        </div>
+        {/* تم إزالة زر الانتقال إلى YouTube الخارجي */}
       </div>
     );
   }
@@ -109,11 +96,17 @@ export const YouTubePlayer = ({
   return (
     <div className={cn("relative rounded-lg overflow-hidden", className)}>
       <iframe
-        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&fs=0&disablekb=1`}
         title={title}
-        className="w-full h-full"
+        className="w-full h-full pointer-events-auto"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
+        sandbox="allow-scripts allow-same-origin"
+      />
+      
+      {/* طبقة شفافة لمنع النقر بالزر الأيمن والتحويل */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        onContextMenu={(e) => e.preventDefault()}
       />
     </div>
   );

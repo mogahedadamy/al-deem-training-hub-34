@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { AdvancedVideoPlayer } from './AdvancedVideoPlayer';
+import { ProfessionalVideoPlayer } from './ProfessionalVideoPlayer';
 import { useNetworkOptimization } from '@/hooks/useNetworkOptimization';
 
 interface VideoSource {
@@ -93,7 +93,7 @@ export const VideoQualityManager = ({
   const initialQuality = getOptimalQuality();
 
   return (
-    <AdvancedVideoPlayer
+    <ProfessionalVideoPlayer
       videoQualities={sortedQualities}
       title={title}
       onProgress={onProgress}
