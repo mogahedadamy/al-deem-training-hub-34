@@ -94,13 +94,14 @@ export const YouTubePlayer = ({
   }
 
   return (
-    <div className={cn("relative rounded-lg overflow-hidden", className)}>
+    <div className={cn("relative w-full aspect-video rounded-lg overflow-hidden bg-black", className)}>
       <iframe
         src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&fs=0&disablekb=1`}
         title={title}
-        className="w-full h-full pointer-events-auto"
+        className="absolute inset-0 w-full h-full border-0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         sandbox="allow-scripts allow-same-origin"
+        style={{ border: 'none' }}
       />
       
       {/* طبقة شفافة لمنع النقر بالزر الأيمن والتحويل */}
