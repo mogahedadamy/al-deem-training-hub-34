@@ -311,7 +311,7 @@ export const courses: Course[] = [
         duration: 45,
         type: "video",
         content: {
-          videoUrl: "https://www.youtube.com/watch?v=safety1",
+          videoUrl: "https://youtu.be/mMUfWGGCMcc?si=BSuzwABq4xT9TBlg",
           textContent: "تعتبر السلامة المهنية من أهم الجوانب في بيئة العمل..."
         },
         isCompleted: false,
