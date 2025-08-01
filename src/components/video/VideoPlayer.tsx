@@ -76,34 +76,26 @@ export const VideoPlayer = ({
     );
   }
 
-  // مشغل مباشر متقدم مع إدارة الجودة
-  if (qualities && qualities.length > 0) {
-    return (
-      <VideoQualityManager
-        sources={qualities}
-        title={title}
-        onProgress={onProgress}
-        onComplete={onComplete}
-        className={className}
-        poster={poster}
-        autoplay={autoplay}
-      />
-    );
-  }
-
-  // مشغل مباشر مع جودات افتراضية محسنة للشبكة
-  const defaultQualities = [
-    {
-      url: src,
-      quality: getRecommendedVideoQuality(),
-      resolution: getRecommendedVideoQuality(),
-      type: 'mp4' as const
-    }
-  ];
+  // مشغل مباشر مع إدارة الجودة
+  const videoSources = qualities && qualities.length > 0 
+    ? qualities.map(q => ({
+        url: q.url,
+        quality: q.quality,
+        resolution: q.resolution,
+        type: 'mp4' as const
+      }))
+    : [
+        {
+          url: src,
+          quality: getRecommendedVideoQuality(),
+          resolution: getRecommendedVideoQuality(),
+          type: 'mp4' as const
+        }
+      ];
 
   return (
     <VideoQualityManager
-      sources={defaultQualities}
+      sources={videoSources}
       title={title}
       onProgress={onProgress}
       onComplete={onComplete}
