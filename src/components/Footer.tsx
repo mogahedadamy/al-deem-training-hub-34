@@ -41,15 +41,9 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="border-t border-border/50 mt-6 pt-4 relative">
-          <div className="text-center">
-            <p className="text-xs text-muted-foreground">
-              كل الحقوق محفوظة © 2025 • تم التطوير بواسطة SudaPixel
-            </p>
-          </div>
-          
-          {/* Admin Access - Only on homepage */}
+          {/* Admin Access - Only on homepage, positioned above copyright */}
           {isHomePage && (
-            <div className="absolute bottom-2 left-2">
+            <div className="absolute -top-2 left-2">
               <Link 
                 to="/admin/login" 
                 className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/90 hover:bg-primary text-white shadow-lg hover:shadow-xl border-2 border-white/20 backdrop-blur-sm transition-all duration-300 hover:scale-110 group"
@@ -59,6 +53,12 @@ const Footer = () => {
               </Link>
             </div>
           )}
+          
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground">
+              كل الحقوق محفوظة © 2025 • تم التطوير بواسطة SudaPixel
+            </p>
+          </div>
         </div>
       </div>
     </footer>
