@@ -1,9 +1,12 @@
 import { Phone, Mail, BookOpen, Settings } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
   return (
-    <footer className="bg-white border-t border-primary/20 mt-4">
+    <footer className="bg-white border-t border-primary/20 mt-4 relative">
       {/* Top separator line */}
       <div className="w-full h-px bg-gradient-to-r from-transparent via-primary to-transparent"></div>
       <div className="container mx-auto px-4 py-6">
@@ -37,23 +40,25 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-border/50 mt-6 pt-4">
+        <div className="border-t border-border/50 mt-6 pt-4 relative">
           <div className="text-center">
             <p className="text-xs text-muted-foreground">
               كل الحقوق محفوظة © 2025 • تم التطوير بواسطة SudaPixel
             </p>
           </div>
           
-          {/* Admin Access - Prominent Button */}
-          <div className="fixed bottom-4 left-4 z-50">
-            <Link 
-              to="/admin/login" 
-              className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/90 hover:bg-primary text-white shadow-lg hover:shadow-xl border-2 border-white/20 backdrop-blur-sm transition-all duration-300 hover:scale-110 group"
-              title="دخول لوحة تحكم المدير"
-            >
-              <Settings className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
-            </Link>
-          </div>
+          {/* Admin Access - Only on homepage */}
+          {isHomePage && (
+            <div className="absolute bottom-2 left-2">
+              <Link 
+                to="/admin/login" 
+                className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/90 hover:bg-primary text-white shadow-lg hover:shadow-xl border-2 border-white/20 backdrop-blur-sm transition-all duration-300 hover:scale-110 group"
+                title="دخول لوحة تحكم المدير"
+              >
+                <Settings className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </footer>
