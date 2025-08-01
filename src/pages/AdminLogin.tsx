@@ -16,10 +16,10 @@ const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Admin credentials (في التطبيق الحقيقي يجب أن تكون مشفرة وفي قاعدة البيانات)
+  // Admin credentials - بيانات المدير الحقيقية
   const ADMIN_CREDENTIALS = {
     username: 'admin',
-    password: 'admin123!@#'
+    password: 'alameed123@#'
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -132,19 +132,6 @@ const AdminLogin = () => {
               )}
             </Button>
 
-            {/* معلومات بيانات الدخول للتطوير */}
-            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <h4 className="font-semibold text-blue-800 font-cairo mb-2">
-                بيانات الدخول (للتجربة):
-              </h4>
-              <div className="text-sm text-blue-700 font-mono space-y-1">
-                <p><strong>اسم المستخدم:</strong> admin</p>
-                <p><strong>كلمة المرور:</strong> admin123!@#</p>
-              </div>
-              <p className="text-xs text-blue-600 font-cairo mt-2">
-                ⚠️ هذه بيانات تجريبية فقط للتطوير
-              </p>
-            </div>
           </form>
         </CardContent>
       </Card>
