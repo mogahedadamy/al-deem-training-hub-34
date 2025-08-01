@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { formatPrice } from "@/utils/currency";
 import { useAuth } from "@/contexts/SupabaseAuthContext";
 import { usePayment } from "@/contexts/PaymentContext";
+import { useCourseEnrollments } from "@/hooks/useCourseEnrollments";
 const CoursesSection = () => {
   const {
     state: authState
@@ -14,6 +15,7 @@ const CoursesSection = () => {
   const {
     getTransactionByCourse
   } = usePayment();
+  const { getEnrollmentCount } = useCourseEnrollments();
   const getEnrollmentButton = (course: any) => {
     if (!authState.isAuthenticated) {
       return <Button className="bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all duration-300 px-3 md:px-6 py-2 md:py-2 text-white border-0 shadow-hover text-sm md:text-base font-cairo w-full sm:w-auto" asChild>
@@ -113,7 +115,7 @@ const CoursesSection = () => {
                       <Star className="w-3 h-3 md:w-5 md:h-5 fill-current drop-shadow-sm" />
                       <span className="text-xs font-bold font-cairo">{course.rating}</span>
                     </div>
-                    <div className="text-xs text-muted-foreground font-cairo">{course.students} طالب</div>
+                    <div className="text-xs text-muted-foreground font-cairo">{getEnrollmentCount(course.id)} طالب</div>
                   </div>
                 </div>
                 <CardTitle className="text-base md:text-xl lg:text-2xl font-bold text-secondary mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300 font-cairo leading-tight">{course.title}</CardTitle>
