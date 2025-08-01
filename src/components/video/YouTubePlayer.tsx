@@ -94,7 +94,7 @@ export const YouTubePlayer = ({
   }
 
   return (
-    <div className={cn("relative w-full h-full min-h-[250px] md:min-h-[400px] rounded-none md:rounded-lg overflow-hidden bg-black mx-auto", className)}>
+    <div className={cn("relative w-full aspect-video rounded-none md:rounded-lg overflow-hidden bg-black", className)}>
       <iframe
         src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&fs=0&disablekb=1&iv_load_policy=3&controls=1`}
         title={title}
