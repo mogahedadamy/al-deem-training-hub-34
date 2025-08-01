@@ -311,7 +311,29 @@ export const courses: Course[] = [
         duration: 45,
         type: "video",
         content: {
-          videoUrl: "https://youtu.be/mMUfWGGCMcc?si=BSuzwABq4xT9TBlg",
+          videoUrl: "https://alameed.b-cdn.net/first%20lesson.mp4",
+          videoQualities: [
+            {
+              url: "https://alameed.b-cdn.net/first%20lesson.mp4",
+              quality: "1080p",
+              resolution: "1920x1080"
+            },
+            {
+              url: "https://alameed.b-cdn.net/first%20lesson_720p.mp4",
+              quality: "720p", 
+              resolution: "1280x720"
+            },
+            {
+              url: "https://alameed.b-cdn.net/first%20lesson_480p.mp4",
+              quality: "480p",
+              resolution: "854x480"
+            },
+            {
+              url: "https://alameed.b-cdn.net/first%20lesson_360p.mp4",
+              quality: "360p",
+              resolution: "640x360"
+            }
+          ],
           textContent: "تعتبر السلامة المهنية من أهم الجوانب في بيئة العمل..."
         },
         isCompleted: false,
