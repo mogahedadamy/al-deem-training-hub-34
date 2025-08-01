@@ -316,6 +316,71 @@ export const courses: Course[] = [
         },
         isCompleted: false,
         order: 1
+      },
+      {
+        id: "safety-lesson-2",
+        title: "المحاضرة الثانية - السلامة المهنية",
+        description: "مواضيع متقدمة في السلامة المهنية",
+        duration: 45,
+        type: "video",
+        content: {
+          videoUrl: "https://youtu.be/vvt-_UW0yNc?si=3Lz9P5rveSvHmU5P",
+          textContent: "استكمال مفاهيم السلامة المهنية الأساسية..."
+        },
+        isCompleted: false,
+        order: 2
+      },
+      {
+        id: "safety-lesson-3",
+        title: "المحاضرة الثالثة - السلامة المهنية",
+        description: "تطبيقات عملية في السلامة المهنية",
+        duration: 45,
+        type: "video",
+        content: {
+          videoUrl: "https://youtu.be/C8mULJ9pJ_E?si=XIuE_eAHbQX49rcA",
+          textContent: "تطبيقات عملية ودراسات حالة في السلامة المهنية..."
+        },
+        isCompleted: false,
+        order: 3
+      },
+      {
+        id: "safety-lesson-4",
+        title: "المحاضرة الرابعة - السلامة المهنية",
+        description: "إدارة المخاطر في بيئة العمل",
+        duration: 45,
+        type: "video",
+        content: {
+          videoUrl: "https://youtu.be/ihPzsLJYao4?si=qp8jcLYUehaQAlJh",
+          textContent: "تحليل وإدارة المخاطر المهنية بشكل فعال..."
+        },
+        isCompleted: false,
+        order: 4
+      },
+      {
+        id: "safety-lesson-5",
+        title: "المحاضرة الخامسة - السلامة المهنية",
+        description: "أنظمة الوقاية والحماية",
+        duration: 45,
+        type: "video",
+        content: {
+          videoUrl: "https://youtu.be/T3xgiq5KK14?si=TzFhY8v0cWYq_0H4",
+          textContent: "أنظمة الوقاية والحماية في بيئة العمل..."
+        },
+        isCompleted: false,
+        order: 5
+      },
+      {
+        id: "safety-lesson-6",
+        title: "المحاضرة السادسة - السلامة المهنية",
+        description: "التدريب والتوعية في السلامة المهنية",
+        duration: 45,
+        type: "video",
+        content: {
+          videoUrl: "https://youtu.be/ReP0pbSzVmU?si=cAIXqZYDKnljHiih",
+          textContent: "أهمية التدريب والتوعية في تطبيق السلامة المهنية..."
+        },
+        isCompleted: false,
+        order: 6
       }
     ],
     category: "السلامة المهنية",
