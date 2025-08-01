@@ -44,14 +44,14 @@ const Footer = () => {
             </p>
           </div>
           
-          {/* Admin Access - Small Button */}
-          <div className="absolute bottom-2 left-2">
+          {/* Admin Access - Prominent Button */}
+          <div className="fixed bottom-4 left-4 z-50">
             <Link 
               to="/admin/login" 
-              className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-muted/50 hover:bg-muted border border-border/30 transition-all duration-200 hover:scale-105"
-              title="لوحة تحكم المدير"
+              className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/90 hover:bg-primary text-white shadow-lg hover:shadow-xl border-2 border-white/20 backdrop-blur-sm transition-all duration-300 hover:scale-110 group"
+              title="دخول لوحة تحكم المدير"
             >
-              <Settings className="w-4 h-4 text-muted-foreground" />
+              <Settings className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
             </Link>
           </div>
         </div>
