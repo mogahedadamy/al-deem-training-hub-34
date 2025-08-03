@@ -82,26 +82,71 @@ const Header = () => {
               الرئيسية
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
             </Link>
-            <Link to="/#about" className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-lg">
+            <button 
+              onClick={() => {
+                navigate('/');
+                setTimeout(() => {
+                  const aboutSection = document.getElementById('about');
+                  aboutSection?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+              className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-lg"
+            >
               عن المركز
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
-            </Link>
-            <Link to="/#team" className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-lg">
+            </button>
+            <button 
+              onClick={() => {
+                navigate('/');
+                setTimeout(() => {
+                  const teamSection = document.getElementById('team');
+                  teamSection?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+              className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-lg"
+            >
               فريق الخبراء
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
-            </Link>
-            <Link to="/#training-plan" className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-lg">
+            </button>
+            <button 
+              onClick={() => {
+                navigate('/');
+                setTimeout(() => {
+                  const trainingSection = document.getElementById('training-plan');
+                  trainingSection?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+              className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-lg"
+            >
               الخطة التدريبية
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
-            </Link>
-            <Link to="/#courses" className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-lg">
+            </button>
+            <button 
+              onClick={() => {
+                navigate('/');
+                setTimeout(() => {
+                  const coursesSection = document.getElementById('courses');
+                  coursesSection?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+              className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-lg"
+            >
               الدورات
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
-            </Link>
-            <Link to="/#contact" className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-lg">
+            </button>
+            <button 
+              onClick={() => {
+                navigate('/');
+                setTimeout(() => {
+                  const contactSection = document.getElementById('contact');
+                  contactSection?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+              className="text-foreground hover:text-primary transition-all duration-300 font-medium relative group text-lg"
+            >
               اتصل بنا
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
-            </Link>
+            </button>
           </nav>
 
           {/* User Menu / Auth Buttons */}
@@ -236,41 +281,71 @@ const Header = () => {
               >
                 الرئيسية
               </Link>
-              <Link 
-                to="/#about" 
-                onClick={() => setIsMenuOpen(false)}
-                className="text-foreground hover:text-primary transition-all duration-300 py-4 px-4 hover:bg-primary/5 rounded-lg font-medium text-lg font-cairo"
+              <button 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  navigate('/');
+                  setTimeout(() => {
+                    const aboutSection = document.getElementById('about');
+                    aboutSection?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="text-foreground hover:text-primary transition-all duration-300 py-4 px-4 hover:bg-primary/5 rounded-lg font-medium text-lg font-cairo text-right"
               >
                 عن المركز
-              </Link>
-              <Link 
-                to="/#team" 
-                onClick={() => setIsMenuOpen(false)}
-                className="text-foreground hover:text-primary transition-all duration-300 py-4 px-4 hover:bg-primary/5 rounded-lg font-medium text-lg font-cairo"
+              </button>
+              <button 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  navigate('/');
+                  setTimeout(() => {
+                    const teamSection = document.getElementById('team');
+                    teamSection?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="text-foreground hover:text-primary transition-all duration-300 py-4 px-4 hover:bg-primary/5 rounded-lg font-medium text-lg font-cairo text-right"
               >
                 فريق الخبراء
-              </Link>
-              <Link 
-                to="/#training-plan" 
-                onClick={() => setIsMenuOpen(false)}
-                className="text-foreground hover:text-primary transition-all duration-300 py-4 px-4 hover:bg-primary/5 rounded-lg font-medium text-lg font-cairo"
+              </button>
+              <button 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  navigate('/');
+                  setTimeout(() => {
+                    const trainingSection = document.getElementById('training-plan');
+                    trainingSection?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="text-foreground hover:text-primary transition-all duration-300 py-4 px-4 hover:bg-primary/5 rounded-lg font-medium text-lg font-cairo text-right"
               >
                 الخطة التدريبية
-              </Link>
-              <Link 
-                to="/#courses" 
-                onClick={() => setIsMenuOpen(false)}
-                className="text-foreground hover:text-primary transition-all duration-300 py-4 px-4 hover:bg-primary/5 rounded-lg font-medium text-lg font-cairo"
+              </button>
+              <button 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  navigate('/');
+                  setTimeout(() => {
+                    const coursesSection = document.getElementById('courses');
+                    coursesSection?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="text-foreground hover:text-primary transition-all duration-300 py-4 px-4 hover:bg-primary/5 rounded-lg font-medium text-lg font-cairo text-right"
               >
                 الدورات
-              </Link>
-              <Link 
-                to="/#contact" 
-                onClick={() => setIsMenuOpen(false)}
-                className="text-foreground hover:text-primary transition-all duration-300 py-4 px-4 hover:bg-primary/5 rounded-lg font-medium text-lg font-cairo"
+              </button>
+              <button 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  navigate('/');
+                  setTimeout(() => {
+                    const contactSection = document.getElementById('contact');
+                    contactSection?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="text-foreground hover:text-primary transition-all duration-300 py-4 px-4 hover:bg-primary/5 rounded-lg font-medium text-lg font-cairo text-right"
               >
                 اتصل بنا
-              </Link>
+              </button>
               
               {/* Mobile Auth/User Section */}
               <div className="mt-4 pt-4 border-t border-border/20">

@@ -152,11 +152,17 @@ const CoursesSection = () => {
         </div>
 
         <div className="text-center">
-          <Button variant="outline" size="lg" className="animate-fade-in border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 px-6 md:px-8 py-3 text-base md:text-lg font-cairo" style={{
-          animationDelay: "0.8s"
-        }}>
-            <Sparkles className="w-5 h-5 md:w-6 md:h-6 ml-3" />
-            عرض جميع الدورات
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="animate-fade-in border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 px-6 md:px-8 py-3 text-base md:text-lg font-cairo" 
+            style={{ animationDelay: "0.8s" }}
+            asChild
+          >
+            <Link to="/dashboard">
+              <Sparkles className="w-5 h-5 md:w-6 md:h-6 ml-3" />
+              عرض جميع الدورات
+            </Link>
           </Button>
         </div>
       </div>

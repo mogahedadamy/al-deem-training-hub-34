@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { GraduationCap, Users, Award, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { GraduationCap, Users, Award, BookOpen, MessageCircle } from "lucide-react";
 const TeamSection = () => {
   const trainers = [{
     name: "أ. معتز محجوب",
@@ -112,12 +113,25 @@ const TeamSection = () => {
         <div className="mt-12 md:mt-16 text-center animate-fade-in" style={{
         animationDelay: "0.5s"
       }}>
-          <div className="inline-flex items-center gap-3 bg-gradient-primary/10 rounded-full px-6 py-4 border border-primary/20">
+          <div className="inline-flex items-center gap-3 bg-gradient-primary/10 rounded-full px-6 py-4 border border-primary/20 mb-6">
             <Award className="w-6 h-6 text-primary" />
             <span className="text-primary font-semibold font-cairo">
               مركز معتمد ومسجل تحت رقم 1016
             </span>
           </div>
+          
+          {/* Contact Team Button */}
+          <Button 
+            variant="gradient" 
+            className="px-8 py-3 text-lg font-cairo"
+            onClick={() => {
+              const contactSection = document.getElementById('contact');
+              contactSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            <MessageCircle className="w-5 h-5 ml-3" />
+            تواصل مع فريق الخبراء
+          </Button>
         </div>
       </div>
     </section>;

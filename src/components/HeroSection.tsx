@@ -59,11 +59,26 @@ const HeroSection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 md:gap-6 lg:gap-8 justify-center items-center animate-fade-in px-4 lg:px-8" style={{ animationDelay: "0.4s" }}>
-            <Button size="lg" className="w-full sm:w-auto text-lg md:text-xl lg:text-2xl px-8 md:px-10 lg:px-16 py-3 md:py-4 lg:py-6 bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all duration-300 border-0 shadow-elegant font-cairo rounded-2xl">
+            <Button 
+              size="lg" 
+              className="w-full sm:w-auto text-lg md:text-xl lg:text-2xl px-8 md:px-10 lg:px-16 py-3 md:py-4 lg:py-6 bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all duration-300 border-0 shadow-elegant font-cairo rounded-2xl"
+              onClick={() => {
+                const coursesSection = document.getElementById('courses');
+                coursesSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 ml-3 md:ml-4 lg:ml-6" />
               استكشف دوراتنا
             </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg md:text-xl lg:text-2xl px-8 md:px-10 lg:px-16 py-3 md:py-4 lg:py-6 border-2 border-white/40 text-white hover:bg-white hover:text-secondary backdrop-blur-lg bg-white/15 transition-all duration-300 font-cairo rounded-2xl shadow-xl">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="w-full sm:w-auto text-lg md:text-xl lg:text-2xl px-8 md:px-10 lg:px-16 py-3 md:py-4 lg:py-6 border-2 border-white/40 text-white hover:bg-white hover:text-secondary backdrop-blur-lg bg-white/15 transition-all duration-300 font-cairo rounded-2xl shadow-xl"
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                contactSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               تواصل معنا
             </Button>
           </div>

@@ -97,14 +97,28 @@ const ContactSection = () => {
             <div className="pt-8">
               <h4 className="text-base md:text-xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4 md:mb-6 font-cairo">تواصل معنا:</h4>
               <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2 md:gap-4">
-                <Button className="bg-green-500 hover:bg-green-600 text-white border-0 shadow-hover hover:shadow-glow hover:scale-105 transition-all duration-300 px-3 md:px-6 py-2 md:py-3 text-xs md:text-base font-cairo">
+                <Button 
+                  className="bg-green-500 hover:bg-green-600 text-white border-0 shadow-hover hover:shadow-glow hover:scale-105 transition-all duration-300 px-3 md:px-6 py-2 md:py-3 text-xs md:text-base font-cairo"
+                  onClick={() => window.open('https://wa.me/249123456789', '_blank')}
+                >
                   <MessageCircle className="w-4 h-4 md:w-6 md:h-6 ml-2 md:ml-3" />
                   واتساب
                 </Button>
-                <Button variant="outline" className="border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 px-3 md:px-6 py-2 md:py-3 text-xs md:text-base font-cairo">
+                <Button 
+                  variant="outline" 
+                  className="border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 px-3 md:px-6 py-2 md:py-3 text-xs md:text-base font-cairo"
+                  onClick={() => window.open('https://zoom.us/join', '_blank')}
+                >
                   📹 زووم
                 </Button>
-                <Button variant="outline" className="border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 md:px-6 md:py-3 text-xs md:text-base font-cairo mx-0 px-[12px] py-[8px]">
+                <Button 
+                  variant="outline" 
+                  className="border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 md:px-6 md:py-3 text-xs md:text-base font-cairo mx-0 px-[12px] py-[8px]"
+                  onClick={() => {
+                    const teamSection = document.getElementById('team');
+                    teamSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
                   💻 أونلاين
                 </Button>
               </div>
