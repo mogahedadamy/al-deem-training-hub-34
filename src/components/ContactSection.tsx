@@ -54,66 +54,52 @@ const ContactSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
-          {/* Enhanced Contact Information */}
-          <div className="space-y-8 animate-fade-in" style={{
+        <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
+          {/* Enhanced Contact Information - Takes 2 columns on desktop */}
+          <div className="lg:col-span-2 space-y-8 animate-fade-in" style={{
           animationDelay: "0.3s"
         }}>
             <h3 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-8">معلومات التواصل</h3>
             
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-1 gap-3 md:gap-6">
-              {contactInfo.slice(0, 3).map((info, index) => <Card key={index} className={`group border-0 shadow-card hover:shadow-elegant transition-all duration-500 hover:scale-105 bg-gradient-card ${index === 2 ? 'col-span-2 mx-auto max-w-sm md:col-span-1 md:max-w-none md:mx-0' : ''}`}>
-                  <CardContent className="p-3 md:p-8">
-                    <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-right space-y-2 md:space-y-0 md:space-x-8">
-                      <div className={`bg-gradient-to-r ${info.gradient} p-2 md:p-4 rounded-lg md:rounded-2xl shadow-hover group-hover:shadow-glow transition-all duration-300 flex-shrink-0`}>
-                        <info.icon className="w-4 h-4 md:w-7 md:h-7 text-white drop-shadow-sm" />
+            {/* Desktop: 2x2 grid, Mobile: 2 columns with last row centered */}
+            <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 md:gap-6">
+              {contactInfo.map((info, index) => <Card key={index} className={`group border-0 shadow-card hover:shadow-elegant transition-all duration-500 hover:scale-105 bg-gradient-card ${index >= 2 && index < 3 ? 'col-span-2 mx-auto max-w-sm lg:col-span-1 lg:max-w-none lg:mx-0' : ''} ${index === 3 ? 'col-span-2 mx-auto max-w-sm lg:col-span-1 lg:max-w-none lg:mx-0' : ''}`}>
+                  <CardContent className="p-3 lg:p-6">
+                    <div className="flex flex-col lg:flex-row items-center lg:items-start text-center lg:text-right space-y-2 lg:space-y-0 lg:space-x-4">
+                      <div className={`bg-gradient-to-r ${info.gradient} p-2 lg:p-3 rounded-lg lg:rounded-xl shadow-hover group-hover:shadow-glow transition-all duration-300 flex-shrink-0`}>
+                        <info.icon className="w-4 h-4 lg:w-6 lg:h-6 text-white drop-shadow-sm" />
                       </div>
-                      <div>
-                        <h4 className="text-sm md:text-xl font-bold text-secondary mb-1 md:mb-2 group-hover:text-primary transition-colors duration-300 font-cairo">{info.title}</h4>
-                        <p className="text-xs md:text-2xl font-bold text-foreground mb-1 md:mb-2 font-cairo">{info.details}</p>
-                        <p className="text-muted-foreground leading-relaxed text-xs md:text-base font-cairo">{info.description}</p>
+                      <div className="flex-1">
+                        <h4 className="text-sm lg:text-lg font-bold text-secondary mb-1 lg:mb-2 group-hover:text-primary transition-colors duration-300 font-cairo">{info.title}</h4>
+                        <p className="text-xs lg:text-xl font-bold text-foreground mb-1 lg:mb-2 font-cairo">{info.details}</p>
+                        <p className="text-muted-foreground leading-relaxed text-xs lg:text-sm font-cairo">{info.description}</p>
                       </div>
                     </div>
                   </CardContent>
                 </Card>)}
-              {/* Working Hours Card - Centered on mobile */}
-              <Card className="group border-0 shadow-card hover:shadow-elegant transition-all duration-500 hover:scale-105 bg-gradient-card col-span-2 mx-auto max-w-sm md:col-span-1 md:max-w-none md:mx-0">
-                <CardContent className="p-3 md:p-8">
-                  <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-right space-y-2 md:space-y-0 md:space-x-8">
-                    <div className={`bg-gradient-to-r ${contactInfo[3].gradient} p-2 md:p-4 rounded-lg md:rounded-2xl shadow-hover group-hover:shadow-glow transition-all duration-300 flex-shrink-0`}>
-                      <Clock className="w-4 h-4 md:w-7 md:h-7 text-white drop-shadow-sm" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm md:text-xl font-bold text-secondary mb-1 md:mb-2 group-hover:text-primary transition-colors duration-300 font-cairo">{contactInfo[3].title}</h4>
-                      <p className="text-xs md:text-2xl font-bold text-foreground mb-1 md:mb-2 font-cairo">{contactInfo[3].details}</p>
-                      <p className="text-muted-foreground leading-relaxed text-xs md:text-base font-cairo">{contactInfo[3].description}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
 
             {/* Enhanced Social Links */}
-            <div className="pt-8">
-              <h4 className="text-base md:text-xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4 md:mb-6 font-cairo">تواصل معنا:</h4>
-              <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2 md:gap-4">
+            <div className="pt-6 lg:pt-8">
+              <h4 className="text-base lg:text-xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4 lg:mb-6 font-cairo">تواصل معنا:</h4>
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
                 <Button 
-                  className="bg-green-500 hover:bg-green-600 text-white border-0 shadow-hover hover:shadow-glow hover:scale-105 transition-all duration-300 px-3 md:px-6 py-2 md:py-3 text-xs md:text-base font-cairo"
+                  className="bg-green-500 hover:bg-green-600 text-white border-0 shadow-hover hover:shadow-glow hover:scale-105 transition-all duration-300 px-3 lg:px-6 py-2 lg:py-3 text-xs lg:text-base font-cairo"
                   onClick={() => window.open('https://wa.me/249123456789', '_blank')}
                 >
-                  <MessageCircle className="w-4 h-4 md:w-6 md:h-6 ml-2 md:ml-3" />
+                  <MessageCircle className="w-4 h-4 lg:w-5 lg:h-5 ml-2" />
                   واتساب
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 px-3 md:px-6 py-2 md:py-3 text-xs md:text-base font-cairo"
+                  className="border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 px-3 lg:px-6 py-2 lg:py-3 text-xs lg:text-base font-cairo"
                   onClick={() => window.open('https://zoom.us/join', '_blank')}
                 >
                   📹 زووم
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 md:px-6 md:py-3 text-xs md:text-base font-cairo mx-0 px-[12px] py-[8px]"
+                  className="border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 px-3 lg:px-6 py-2 lg:py-3 text-xs lg:text-base font-cairo col-span-2 lg:col-span-1"
                   onClick={() => {
                     const teamSection = document.getElementById('team');
                     teamSection?.scrollIntoView({ behavior: 'smooth' });
@@ -125,23 +111,62 @@ const ContactSection = () => {
             </div>
           </div>
 
-          {/* Enhanced Contact Form */}
-          <Card className="border-0 shadow-elegant animate-fade-in bg-gradient-card" style={{
-          animationDelay: "0.4s"
-        }}>
-            <CardHeader className="pb-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="bg-gradient-primary p-3 rounded-2xl shadow-hover">
-                  <Send className="w-7 h-7 text-white drop-shadow-sm" />
+          {/* Enhanced Contact Form - Takes 1 column on desktop */}
+          <div className="lg:col-span-1">
+            <Card className="border-0 shadow-elegant animate-fade-in bg-gradient-card h-fit" style={{
+            animationDelay: "0.4s"
+          }}>
+              <CardHeader className="pb-4 lg:pb-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-gradient-primary p-2 lg:p-3 rounded-xl lg:rounded-2xl shadow-hover">
+                    <Send className="w-5 h-5 lg:w-6 lg:h-6 text-white drop-shadow-sm" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg lg:text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent font-cairo">أرسل لنا رسالة</CardTitle>
+                    <p className="text-muted-foreground text-sm lg:text-base font-cairo">سنتواصل معك في أقرب وقت</p>
+                  </div>
                 </div>
-                <div>
-                  <CardTitle className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">أرسل لنا رسالة</CardTitle>
-                  <p className="text-muted-foreground">سنتواصل معك في أقرب وقت</p>
-                </div>
-              </div>
-            </CardHeader>
-            
-          </Card>
+              </CardHeader>
+              
+              <CardContent className="pt-0">
+                <form className="space-y-4 lg:space-y-6">
+                  <div>
+                    <Input 
+                      placeholder="الاسم الكامل" 
+                      className="bg-background/50 border-primary/20 focus:border-primary transition-colors font-cairo"
+                    />
+                  </div>
+                  <div>
+                    <Input 
+                      type="email" 
+                      placeholder="البريد الإلكتروني" 
+                      className="bg-background/50 border-primary/20 focus:border-primary transition-colors font-cairo"
+                    />
+                  </div>
+                  <div>
+                    <Input 
+                      placeholder="رقم الهاتف" 
+                      className="bg-background/50 border-primary/20 focus:border-primary transition-colors font-cairo"
+                    />
+                  </div>
+                  <div>
+                    <Textarea 
+                      placeholder="اكتب رسالتك هنا..." 
+                      rows={4}
+                      className="bg-background/50 border-primary/20 focus:border-primary transition-colors resize-none font-cairo"
+                    />
+                  </div>
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300 text-white font-bold py-3 lg:py-4 font-cairo"
+                  >
+                    <Send className="w-4 h-4 lg:w-5 lg:h-5 ml-2" />
+                    إرسال الرسالة
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </section>;
