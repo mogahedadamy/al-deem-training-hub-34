@@ -30,7 +30,6 @@ const courseFilters = {
 
 const OptimizedCoursesGrid = () => {
   const { state } = useAuth();
-  const { getTransactionForCourse } = usePayment();
   
   // حالات الفلترة
   const [filters, setFilters] = useState({
@@ -62,8 +61,9 @@ const OptimizedCoursesGrid = () => {
       );
     }
 
-    const transaction = getTransactionForCourse(course.id);
-    
+    // مؤقتاً نتجاهل PaymentContext حتى نتأكد من structure
+    // const transaction = getTransactionData(course.id);
+    /* مؤقتاً معطل
     if (transaction?.status === 'verified') {
       return (
         <Button asChild className="w-full font-cairo">
@@ -87,6 +87,7 @@ const OptimizedCoursesGrid = () => {
         </Button>
       );
     }
+    */
 
     return (
       <Button asChild className="w-full font-cairo">

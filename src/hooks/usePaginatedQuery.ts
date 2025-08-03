@@ -18,6 +18,32 @@ interface PaginatedResult<T> {
   loadPage: (page: number) => Promise<void>;
 }
 
+interface Course {
+  id: string;
+  title: string;
+  description: string;
+  short_description?: string;
+  thumbnail_url?: string;
+  price: number;
+  level: string;
+  category?: string;
+  duration_hours?: number;
+  status: string;
+  features?: string[];
+  created_at: string;
+}
+
+interface Lesson {
+  id: string;
+  title: string;
+  description?: string;
+  duration_minutes?: number;
+  order_index: number;
+  lesson_type: string;
+  is_free: boolean;
+  video_url?: string;
+}
+
 // Cache عالمي محسن
 const globalCache = new Map<string, {
   data: any;
@@ -32,36 +58,25 @@ const CACHE_TTL = {
   default: 5 * 60 * 1000
 };
 
-export function usePaginatedQuery<T>(
-  table: string,
-  options: PaginationOptions & {
-    select?: string;
-    filters?: Record<string, any>;
-    orderBy?: { column: string; ascending?: boolean };
-    cacheTTL?: number;
-  } = {}
-): PaginatedResult<T> {
-  const {
-    pageSize = 12,
-    enableInfiniteScroll = true,
-    select = '*',
-    filters = {},
-    orderBy = { column: 'created_at', ascending: false },
-    cacheTTL = CACHE_TTL[table as keyof typeof CACHE_TTL] || CACHE_TTL.default
-  } = options;
-
-  const [data, setData] = useState<T[]>([]);
+// Hook مخصص للكورسات مع تحسينات
+export function usePaginatedCourses(filters: {
+  category?: string;
+  level?: string;
+  status?: string;
+} = {}): PaginatedResult<Course> {
+  const [data, setData] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 12;
 
   // إنشاء cache key
   const getCacheKey = useCallback((page: number) => {
     const filterKey = Object.keys(filters).length > 0 ? JSON.stringify(filters) : 'all';
-    return `${table}_${filterKey}_${orderBy.column}_${orderBy.ascending}_${page}`;
-  }, [table, filters, orderBy]);
+    return `courses_${filterKey}_${page}`;
+  }, [filters]);
 
   // التحقق من الcache
   const getFromCache = useCallback((key: string) => {
@@ -78,11 +93,11 @@ export function usePaginatedQuery<T>(
     globalCache.set(key, {
       data,
       timestamp: Date.now(),
-      ttl: cacheTTL
+      ttl: CACHE_TTL.courses
     });
-  }, [cacheTTL]);
+  }, []);
 
-  // تحميل البيانات مع pagination محسنة
+  // تحميل البيانات
   const loadData = useCallback(async (page: number, append = false) => {
     try {
       if (!append) setLoading(true);
@@ -103,21 +118,38 @@ export function usePaginatedQuery<T>(
         return;
       }
 
-      // بناء الاستعلام مع تحسينات
+      // بناء الاستعلام
       let query = supabase
-        .from(table)
-        .select(select, { count: 'exact' });
+        .from('courses')
+        .select(`
+          id,
+          title,
+          description,
+          short_description,
+          thumbnail_url,
+          price,
+          level,
+          category,
+          duration_hours,
+          status,
+          features,
+          created_at
+        `, { count: 'exact' });
 
       // إضافة الفلاتر
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          query = query.eq(key, value);
-        }
-      });
+      query = query.eq('status', 'published');
+      
+      if (filters.category && filters.category !== 'all') {
+        query = query.eq('category', filters.category);
+      }
+      
+      if (filters.level && filters.level !== 'all') {
+        query = query.eq('level', filters.level);
+      }
 
       // الترتيب والpagination
       query = query
-        .order(orderBy.column, { ascending: orderBy.ascending })
+        .order('created_at', { ascending: false })
         .range((page - 1) * pageSize, page * pageSize - 1);
 
       const { data: result, error: queryError, count } = await query;
@@ -142,12 +174,12 @@ export function usePaginatedQuery<T>(
       setHasMore(resultData.data.length === pageSize);
 
     } catch (err) {
-      console.error(`Error loading ${table}:`, err);
+      console.error('Error loading courses:', err);
       setError(err instanceof Error ? err.message : 'حدث خطأ في تحميل البيانات');
     } finally {
       setLoading(false);
     }
-  }, [table, select, filters, orderBy, pageSize, getCacheKey, getFromCache, saveToCache]);
+  }, [filters, pageSize, getCacheKey, getFromCache, saveToCache]);
 
   // تحميل المزيد
   const loadMore = useCallback(async () => {
@@ -155,8 +187,8 @@ export function usePaginatedQuery<T>(
     
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
-    await loadData(nextPage, enableInfiniteScroll);
-  }, [hasMore, loading, currentPage, loadData, enableInfiniteScroll]);
+    await loadData(nextPage, true);
+  }, [hasMore, loading, currentPage, loadData]);
 
   // تحديث البيانات
   const refresh = useCallback(async () => {
@@ -191,53 +223,90 @@ export function usePaginatedQuery<T>(
   };
 }
 
-// Hook مخصص للكورسات مع تحسينات
-export function usePaginatedCourses(filters: {
-  category?: string;
-  level?: string;
-  status?: string;
-} = {}) {
-  return usePaginatedQuery('courses', {
-    pageSize: 12,
-    select: `
-      id,
-      title,
-      description,
-      short_description,
-      thumbnail_url,
-      price,
-      level,
-      category,
-      duration_hours,
-      status,
-      features,
-      created_at
-    `,
-    filters: {
-      status: 'published',
-      ...filters
-    },
-    orderBy: { column: 'created_at', ascending: false },
-    cacheTTL: CACHE_TTL.courses
-  });
-}
-
 // Hook للدروس مع pagination
-export function usePaginatedLessons(courseId: string) {
-  return usePaginatedQuery('lessons', {
-    pageSize: 20,
-    select: `
-      id,
-      title,
-      description,
-      duration_minutes,
-      order_index,
-      lesson_type,
-      is_free,
-      video_url
-    `,
-    filters: { course_id: courseId },
-    orderBy: { column: 'order_index', ascending: true },
-    cacheTTL: CACHE_TTL.lessons
-  });
+export function usePaginatedLessons(courseId: string): PaginatedResult<Lesson> {
+  const [data, setData] = useState<Lesson[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 20;
+
+  const loadData = useCallback(async (page: number, append = false) => {
+    try {
+      if (!append) setLoading(true);
+      setError(null);
+
+      const { data: result, error: queryError, count } = await supabase
+        .from('lessons')
+        .select(`
+          id,
+          title,
+          description,
+          duration_minutes,
+          order_index,
+          lesson_type,
+          is_free,
+          video_url
+        `, { count: 'exact' })
+        .eq('course_id', courseId)
+        .order('order_index', { ascending: true })
+        .range((page - 1) * pageSize, page * pageSize - 1);
+
+      if (queryError) throw queryError;
+
+      if (append) {
+        setData(prev => [...prev, ...result || []]);
+      } else {
+        setData(result || []);
+      }
+      
+      setTotalCount(count || 0);
+      setHasMore((result || []).length === pageSize);
+
+    } catch (err) {
+      console.error('Error loading lessons:', err);
+      setError(err instanceof Error ? err.message : 'حدث خطأ في تحميل الدروس');
+    } finally {
+      setLoading(false);
+    }
+  }, [courseId, pageSize]);
+
+  const loadMore = useCallback(async () => {
+    if (!hasMore || loading) return;
+    
+    const nextPage = currentPage + 1;
+    setCurrentPage(nextPage);
+    await loadData(nextPage, true);
+  }, [hasMore, loading, currentPage, loadData]);
+
+  const refresh = useCallback(async () => {
+    setCurrentPage(1);
+    setData([]);
+    await loadData(1, false);
+  }, [loadData]);
+
+  const loadPage = useCallback(async (page: number) => {
+    setCurrentPage(page);
+    await loadData(page, false);
+  }, [loadData]);
+
+  useEffect(() => {
+    if (courseId) {
+      loadData(1, false);
+    }
+  }, [courseId, loadData]);
+
+  return {
+    data,
+    loading,
+    error,
+    hasMore,
+    totalCount,
+    currentPage,
+    loadMore,
+    refresh,
+    loadPage
+  };
 }
