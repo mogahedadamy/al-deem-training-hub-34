@@ -1,135 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { DetailedProgressBar } from '@/components/progress/DetailedProgressBar';
-import { useLearningProgress } from '@/contexts/LearningProgressContext';
+import { useDashboardOptimized } from '@/hooks/useDashboardOptimized';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
-import { supabase } from '@/integrations/supabase/client';
-import { BookOpen, Clock, Award, TrendingUp, PlayCircle, CheckCircle } from 'lucide-react';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { DashboardLoading } from '@/components/LoadingStates';
+import { BookOpen, Clock, Award, TrendingUp, PlayCircle, CheckCircle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
-interface EnrolledCourse {
-  id: string;
-  title: string;
-  thumbnail_url?: string;
-  enrolled_at: string;
-  progress_percentage: number;
-  totalLessons: number;
-  completedLessons: number;
-  lastAccessed?: string;
-}
-
-export const StudentDashboard = () => {
-  const { state: learningState, getCourseProgress, loadUserProgress } = useLearningProgress();
+// مكون محسن للوحة التحكم
+const DashboardContent = () => {
   const { state: authState } = useAuth();
-  const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourse[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [stats, setStats] = useState({
-    totalCourses: 0,
-    completedCourses: 0,
-    totalLessons: 0,
-    completedLessons: 0,
-    avgProgress: 0
-  });
+  const { enrolledCourses, stats, isLoading, error, refreshData } = useDashboardOptimized(authState.user?.id);
 
-  useEffect(() => {
-    if (authState.isAuthenticated) {
-      loadDashboardData();
-      loadUserProgress();
-    }
-  }, [authState.isAuthenticated]);
-
-  const loadDashboardData = async () => {
-    if (!authState.user?.id) return;
-
-    try {
-      setIsLoading(true);
-
-      // Load enrolled courses with progress
-      const { data: enrollments, error } = await supabase
-        .from('course_enrollments')
-        .select(`
-          *,
-          courses (
-            id,
-            title,
-            thumbnail_url
-          )
-        `)
-        .eq('user_id', authState.user.id)
-        .order('enrolled_at', { ascending: false });
-
-      if (error) throw error;
-
-      const coursesWithProgress: EnrolledCourse[] = [];
-      let totalLessons = 0;
-      let totalCompletedLessons = 0;
-      let totalProgress = 0;
-
-      for (const enrollment of enrollments || []) {
-        const course = enrollment.courses;
-        
-        // Get lessons count for this course
-        const { data: lessons, error: lessonsError } = await supabase
-          .from('lessons')
-          .select('id')
-          .eq('course_id', course.id);
-
-        if (lessonsError) continue;
-
-        const lessonCount = lessons?.length || 0;
-        
-        // Get completed lessons count
-        const { data: completedLessonsData, error: completedError } = await supabase
-          .from('lesson_progress')
-          .select('id')
-          .eq('user_id', authState.user.id)
-          .eq('completed', true)
-          .in('lesson_id', lessons?.map(l => l.id) || []);
-
-        if (completedError) continue;
-
-        const completedCount = completedLessonsData?.length || 0;
-        const progressPercent = lessonCount > 0 ? (completedCount / lessonCount) * 100 : 0;
-
-        coursesWithProgress.push({
-          id: course.id,
-          title: course.title,
-          thumbnail_url: course.thumbnail_url,
-          enrolled_at: enrollment.enrolled_at,
-          progress_percentage: Math.round(progressPercent),
-          totalLessons: lessonCount,
-          completedLessons: completedCount,
-          lastAccessed: enrollment.enrolled_at
-        });
-
-        totalLessons += lessonCount;
-        totalCompletedLessons += completedCount;
-        totalProgress += progressPercent;
-      }
-
-      setEnrolledCourses(coursesWithProgress);
-
-      // Calculate stats
-      const completedCourses = coursesWithProgress.filter(c => c.progress_percentage === 100).length;
-      const avgProgress = coursesWithProgress.length > 0 ? totalProgress / coursesWithProgress.length : 0;
-
-      setStats({
-        totalCourses: coursesWithProgress.length,
-        completedCourses,
-        totalLessons,
-        completedLessons: totalCompletedLessons,
-        avgProgress
-      });
-
-    } catch (error) {
-      console.error('Error loading dashboard data:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // معالجة حالات الخطأ
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription className="font-cairo">{error}</AlertDescription>
+          </Alert>
+          <Button onClick={refreshData} variant="outline" className="font-cairo">
+            إعادة المحاولة
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   const getProgressIcon = (progress: number) => {
     if (progress === 100) return <Award className="w-5 h-5 text-yellow-500" />;
@@ -149,15 +51,9 @@ export const StudentDashboard = () => {
     return date.toLocaleDateString('ar-EG');
   };
 
+  // حالة التحميل
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-subtle flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground font-cairo">جاري تحميل لوحة التحكم...</p>
-        </div>
-      </div>
-    );
+    return <DashboardLoading />;
   }
 
   return (
@@ -300,5 +196,14 @@ export const StudentDashboard = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+// المكون الرئيسي مع Error Boundary
+export const StudentDashboard = () => {
+  return (
+    <ErrorBoundary>
+      <DashboardContent />
+    </ErrorBoundary>
   );
 };

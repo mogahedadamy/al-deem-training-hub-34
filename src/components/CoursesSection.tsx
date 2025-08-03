@@ -162,4 +162,5 @@ const CoursesSection = () => {
       </div>
     </section>;
 };
+
 export default CoursesSection;
