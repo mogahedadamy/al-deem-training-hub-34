@@ -583,7 +583,7 @@ export const courses: Course[] = [
     students: 0,
     badge: "دولي",
     gradient: "from-primary to-accent",
-    thumbnail: "/src/assets/iso-standards.jpg",
+    thumbnail: "/lovable-uploads/d108ca26-bf9e-4b4b-9aa6-7ddcb8db0d34.png",
     features: [
       "معايير ISO 9001",
       "ISO 14001 البيئية",
@@ -767,7 +767,7 @@ export const courses: Course[] = [
     students: 0,
     badge: "إداري",
     gradient: "from-secondary to-primary",
-    thumbnail: "/src/assets/organization-management.jpg",
+    thumbnail: "/lovable-uploads/eb1b0ef0-baae-43ce-9153-cafd151172ab.png",
     features: [
       "الهيكل التنظيمي",
       "إدارة التغيير",
