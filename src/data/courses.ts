@@ -583,7 +583,7 @@ export const courses: Course[] = [
     students: 0,
     badge: "دولي",
     gradient: "from-primary to-accent",
-    thumbnail: "/lovable-uploads/d108ca26-bf9e-4b4b-9aa6-7ddcb8db0d34.png",
+    thumbnail: "/src/assets/iso-standards.jpg",
     features: [
       "معايير ISO 9001",
       "ISO 14001 البيئية",
