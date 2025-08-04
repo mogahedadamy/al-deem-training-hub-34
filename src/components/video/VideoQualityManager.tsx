@@ -49,27 +49,32 @@ export const VideoQualityManager = ({
   const getOptimalQuality = () => {
     const recommendedQuality = getRecommendedVideoQuality();
     
-    // Find matching quality or fallback to closest available
-    const matchingQuality = videoQualities.find(q => 
-      q.resolution.toLowerCase().includes(recommendedQuality.toLowerCase())
-    );
-    
-    if (matchingQuality) return matchingQuality;
+    // Default to medium quality instead of highest for better performance
+    let optimalQuality = videoQualities.find(q => 
+      q.resolution.includes('720p') || q.resolution.includes('480p')
+    ) || videoQualities[Math.floor(videoQualities.length / 2)]; // Default to middle quality
     
     // Fallback logic based on network state
-    if (!networkState.isOnline) return videoQualities[videoQualities.length - 1]; // Lowest quality
+    if (!networkState.isOnline) {
+      return videoQualities[videoQualities.length - 1]; // Lowest quality
+    }
     
     if (networkState.saveData) {
       return videoQualities.find(q => q.resolution.includes('360p')) || videoQualities[videoQualities.length - 1];
     }
     
-    if (networkState.downlink > 10) {
-      return videoQualities.find(q => q.resolution.includes('1080p')) || videoQualities[0];
-    } else if (networkState.downlink > 5) {
-      return videoQualities.find(q => q.resolution.includes('720p')) || videoQualities[0];
+    // More conservative quality selection based on connection speed
+    if (networkState.downlink > 15) {
+      optimalQuality = videoQualities.find(q => q.resolution.includes('1080p')) || videoQualities[0];
+    } else if (networkState.downlink > 8) {
+      optimalQuality = videoQualities.find(q => q.resolution.includes('720p')) || optimalQuality;
+    } else if (networkState.downlink > 3) {
+      optimalQuality = videoQualities.find(q => q.resolution.includes('480p')) || optimalQuality;
     } else {
-      return videoQualities.find(q => q.resolution.includes('480p')) || videoQualities[videoQualities.length - 1];
+      optimalQuality = videoQualities.find(q => q.resolution.includes('360p')) || videoQualities[videoQualities.length - 1];
     }
+    
+    return optimalQuality;
   };
 
   // Sort qualities by resolution (highest first)

@@ -70,6 +70,7 @@ export const ProfessionalVideoPlayer = ({
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
+  const [hasInitialControlsShown, setHasInitialControlsShown] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [currentQuality, setCurrentQuality] = useState(initialQuality || videoQualities[0]);
   const [isBuffering, setIsBuffering] = useState(false);
@@ -264,6 +265,7 @@ export const ProfessionalVideoPlayer = ({
       clearTimeout(controlsTimeoutRef.current);
     }
     
+    // Always hide controls after 3 seconds when playing
     if (isPlaying) {
       controlsTimeoutRef.current = setTimeout(() => {
         setShowControls(false);
@@ -274,6 +276,27 @@ export const ProfessionalVideoPlayer = ({
   const handleMouseMove = () => {
     showControlsTemporarily();
   };
+
+  const handleVideoClick = () => {
+    showControlsTemporarily();
+    togglePlay();
+  };
+
+  // Hide controls after initial load
+  useEffect(() => {
+    if (!hasInitialControlsShown && !isLoading) {
+      setHasInitialControlsShown(true);
+      
+      // Show controls for 4 seconds initially, then hide
+      const initialTimeout = setTimeout(() => {
+        if (!isPlaying) {
+          setShowControls(false);
+        }
+      }, 4000);
+      
+      return () => clearTimeout(initialTimeout);
+    }
+  }, [isLoading, hasInitialControlsShown, isPlaying]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -323,7 +346,11 @@ export const ProfessionalVideoPlayer = ({
       ref={containerRef}
       className={cn("relative bg-black rounded-lg overflow-hidden group", className)}
       onMouseMove={handleMouseMove}
-      onMouseLeave={() => isPlaying && setShowControls(false)}
+      onMouseLeave={() => {
+        if (isPlaying && hasInitialControlsShown) {
+          setShowControls(false);
+        }
+      }}
       tabIndex={0}
     >
       {/* Video Element */}
@@ -565,10 +592,10 @@ export const ProfessionalVideoPlayer = ({
         </div>
       </div>
 
-      {/* Click to play/pause */}
+      {/* Click to show controls and play/pause */}
       <div 
         className="absolute inset-0 cursor-pointer"
-        onClick={togglePlay}
+        onClick={handleVideoClick}
         style={{ zIndex: showControls ? -1 : 1 }}
       />
     </div>
