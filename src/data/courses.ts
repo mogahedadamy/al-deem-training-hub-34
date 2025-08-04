@@ -526,8 +526,8 @@ export const courses: Course[] = [
     prerequisites: []
   },
   {
-    id: "total-quality",
-    title: "برامج الجودة الشاملة",
+    id: "quality-management",
+    title: "إدارة الجودة الشاملة",
     description: "تطبيق مبادئ الجودة الشاملة في المؤسسات",
     icon: CheckSquare,
     duration: "أسبوع واحد",
@@ -570,6 +570,52 @@ export const courses: Course[] = [
     totalHours: 40,
     certificate: true,
     prerequisites: []
+  },
+  {
+    id: "iso-standards",
+    title: "المعايير الدولية ISO",
+    description: "تطبيق معايير الآيزو الدولية في المؤسسات",
+    icon: Shield,
+    duration: "أسبوع واحد",
+    level: "متقدم",
+    price: "48,000 ج.س",
+    rating: 4.9,
+    students: 0,
+    badge: "دولي",
+    gradient: "from-primary to-accent",
+    thumbnail: "/lovable-uploads/d108ca26-bf9e-4b4b-9aa6-7ddcb8db0d34.png",
+    features: [
+      "معايير ISO 9001",
+      "ISO 14001 البيئية",
+      "ISO 45001 السلامة",
+      "شهادة ISO معتمدة"
+    ],
+    instructor: {
+      name: "د. عبدالمطلب ابراهيم",
+      avatar: "/instructors/ahmed-mahmoud.jpg",
+      bio: "خبير معايير دولية معتمد مع خبرة في تطبيق أنظمة ISO",
+      experience: "16 سنة"
+    },
+    lessons: [
+      {
+        id: "iso-lesson-1",
+        title: "مقدمة في معايير ISO",
+        description: "فهم المعايير الدولية وأهميتها",
+        duration: 75,
+        type: "video",
+        content: {
+          videoUrl: "https://www.youtube.com/watch?v=iso1",
+          textContent: "معايير ISO هي المعايير الدولية للجودة..."
+        },
+        isCompleted: false,
+        order: 1
+      }
+    ],
+    category: "المعايير الدولية",
+    language: "العربية",
+    totalHours: 48,
+    certificate: true,
+    prerequisites: ["معرفة أساسية بأنظمة الجودة"]
   },
   {
     id: "report-writing",
