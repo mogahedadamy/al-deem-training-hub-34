@@ -767,7 +767,7 @@ export const courses: Course[] = [
     students: 0,
     badge: "إداري",
     gradient: "from-secondary to-primary",
-    thumbnail: "/lovable-uploads/34a71433-8f6a-4169-aab3-1888301d9e67.png",
+    thumbnail: "/src/assets/organization-management.jpg",
     features: [
       "الهيكل التنظيمي",
       "إدارة التغيير",
