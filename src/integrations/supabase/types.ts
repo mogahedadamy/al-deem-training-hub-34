@@ -52,6 +52,42 @@ export type Database = {
           },
         ]
       }
+      course_messages: {
+        Row: {
+          audio_url: string | null
+          content: string | null
+          course_id: string
+          created_at: string
+          id: string
+          lesson_id: string | null
+          message_type: Database["public"]["Enums"]["message_type"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          audio_url?: string | null
+          content?: string | null
+          course_id: string
+          created_at?: string
+          id?: string
+          lesson_id?: string | null
+          message_type?: Database["public"]["Enums"]["message_type"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          audio_url?: string | null
+          content?: string | null
+          course_id?: string
+          created_at?: string
+          id?: string
+          lesson_id?: string | null
+          message_type?: Database["public"]["Enums"]["message_type"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       courses: {
         Row: {
           category: string | null
@@ -325,6 +361,7 @@ export type Database = {
       app_role: "admin" | "instructor" | "student"
       course_status: "draft" | "published" | "archived"
       lesson_type: "video" | "text" | "quiz" | "assignment"
+      message_type: "text" | "audio"
       payment_status:
         | "pending"
         | "verification_submitted"
@@ -460,6 +497,7 @@ export const Constants = {
       app_role: ["admin", "instructor", "student"],
       course_status: ["draft", "published", "archived"],
       lesson_type: ["video", "text", "quiz", "assignment"],
+      message_type: ["text", "audio"],
       payment_status: [
         "pending",
         "verification_submitted",

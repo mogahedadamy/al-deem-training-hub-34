@@ -14,12 +14,15 @@ import {
   TrendingUp,
   CheckCircle,
   Clock,
-  Users
+  Users,
+  Mic
 } from "lucide-react";
 import { QuestionCard } from "./QuestionCard";
 import { AskQuestionForm } from "./AskQuestionForm";
 import { Question } from "@/types/discussion";
 import { useLearning } from "@/contexts/LearningContext";
+import { useAuth } from "@/contexts/SupabaseAuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface LessonDiscussionProps {
   lessonId: string;
@@ -48,6 +51,8 @@ export const LessonDiscussion = ({
   const [filterBy, setFilterBy] = useState("all");
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>(questions);
   const { state } = useLearning();
+  const { hasRole } = useAuth();
+  const { toast } = useToast();
 
   useEffect(() => {
     let filtered = questions.filter(q => q.lessonId === lessonId);
@@ -123,13 +128,25 @@ export const LessonDiscussion = ({
               <MessageSquare className="w-5 h-5" />
               مناقشة الدرس
             </CardTitle>
-            <Button 
-              onClick={() => setShowAskForm(true)}
-              className="bg-gradient-primary hover:shadow-glow transition-all duration-300 text-white font-cairo"
-            >
-              <Plus className="w-4 h-4 ml-2" />
-              اطرح سؤالاً
-            </Button>
+            <div className="flex items-center gap-2">
+              {(hasRole('instructor') || hasRole('admin')) && (
+                <Button 
+                  onClick={() => toast({ title: 'قريباً', description: 'إرسال الرسائل الصوتية للمدرب فقط – سنضيف التسجيل والرفع قريباً.' })}
+                  variant="outline"
+                  className="font-cairo"
+                >
+                  <Mic className="w-4 h-4 ml-2" />
+                  رسالة صوتية
+                </Button>
+              )}
+              <Button 
+                onClick={() => setShowAskForm(true)}
+                className="bg-gradient-primary hover:shadow-glow transition-all duration-300 text-white font-cairo"
+              >
+                <Plus className="w-4 h-4 ml-2" />
+                اطرح سؤالاً
+              </Button>
+            </div>
           </div>
         </CardHeader>
         
@@ -165,7 +182,6 @@ export const LessonDiscussion = ({
                 className="pl-10 font-cairo"
               />
             </div>
-            
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="w-full md:w-48 font-cairo">
                 <SelectValue placeholder="ترتيب حسب" />
@@ -177,7 +193,6 @@ export const LessonDiscussion = ({
                 <SelectItem value="most-answers" className="font-cairo">الأكثر إجابات</SelectItem>
               </SelectContent>
             </Select>
-
             <Select value={filterBy} onValueChange={setFilterBy}>
               <SelectTrigger className="w-full md:w-48 font-cairo">
                 <SelectValue placeholder="فلترة" />
@@ -190,6 +205,11 @@ export const LessonDiscussion = ({
               </SelectContent>
             </Select>
           </div>
+          {(hasRole('instructor') || hasRole('admin')) ? (
+            <p className="text-xs text-muted-foreground mt-3 font-cairo">الرسائل الصوتية متاحة للمدرب فقط.</p>
+          ) : (
+            <p className="text-xs text-muted-foreground mt-3 font-cairo">إرسال الرسائل الصوتية متاح للمدرب فقط.</p>
+          )}
         </CardContent>
       </Card>
 

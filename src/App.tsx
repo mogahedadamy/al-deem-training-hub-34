@@ -22,6 +22,7 @@ import AdminPayments from "./pages/AdminPayments";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import MyPayments from "./pages/MyPayments";
+import InstructorDashboard from "./pages/InstructorDashboard";
 import AuthSupabase from "./pages/AuthSupabase";
 import { AdminProtectedRoute } from "./components/admin/AdminProtectedRoute";
 import { NotificationManager } from "./components/notifications/NotificationManager";
@@ -72,6 +73,14 @@ const App = () => (
                 element={
                   <SupabaseProtectedRoute requiredRole="admin">
                     <AdminDashboard />
+                  </SupabaseProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/instructor/dashboard" 
+                element={
+                  <SupabaseProtectedRoute requiredRole="instructor">
+                    <InstructorDashboard />
                   </SupabaseProtectedRoute>
                 } 
               />

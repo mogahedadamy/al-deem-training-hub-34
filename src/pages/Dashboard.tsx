@@ -15,5 +15,10 @@ export default function Dashboard() {
     return <Navigate to="/admin/dashboard" replace />;
   }
 
+  // Redirect instructors to instructor dashboard
+  if (hasRole('instructor')) {
+    return <Navigate to="/instructor/dashboard" replace />;
+  }
+
   return <StudentDashboard />;
 }
