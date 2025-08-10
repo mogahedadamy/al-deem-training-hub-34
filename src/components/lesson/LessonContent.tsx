@@ -1,7 +1,12 @@
+import React, { Suspense } from "react";
 import { Clock, BookOpen } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { VideoPlayer } from "@/components/video/VideoPlayer";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Lesson } from "@/types/course";
+
+const LazyVideoPlayer = React.lazy(() =>
+  import('@/components/video/VideoPlayer').then(m => ({ default: m.VideoPlayer }))
+);
 
 interface LessonContentProps {
   lesson: Lesson;
@@ -19,16 +24,18 @@ export const LessonContent = ({
       {/* Video Player / Content Area */}
       <div className="bg-black relative">
         {lesson.type === 'video' ? (
-          <VideoPlayer
-            src={lesson.content.videoUrl || ''}
-            title={lesson.title}
-            onProgress={onVideoProgress}
-            onComplete={onVideoComplete}
-            className="aspect-video"
-            type={lesson.content.videoUrl?.includes('youtube') ? 'youtube' : 'direct'}
-            qualities={lesson.content.videoQualities}
-            autoplay={false}
-          />
+          <Suspense fallback={<Skeleton className="aspect-video w-full" />}>
+            <LazyVideoPlayer
+              src={lesson.content.videoUrl || ''}
+              title={lesson.title}
+              onProgress={onVideoProgress}
+              onComplete={onVideoComplete}
+              className="aspect-video"
+              type={lesson.content.videoUrl?.includes('youtube') ? 'youtube' : 'direct'}
+              qualities={lesson.content.videoQualities}
+              autoplay={false}
+            />
+          </Suspense>
         ) : (
           <div className="aspect-video bg-muted/20 flex items-center justify-center">
             <div className="text-center">

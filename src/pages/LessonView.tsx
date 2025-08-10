@@ -1,12 +1,12 @@
 import { useParams, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { getCourseById } from "@/data/courses";
 import { useAuth } from "@/contexts/SupabaseAuthContext";
 import { useLearning } from "@/contexts/LearningContext";
 import { useVideoProgress } from "@/hooks/useVideoProgress";
 import { useLessonNavigation } from "@/hooks/useLessonNavigation";
-import { LessonContent } from "@/components/lesson/LessonContent";
-import { LessonDiscussion } from "@/components/discussion/LessonDiscussion";
+import { useVirtualization } from "@/hooks/useVirtualization";
+import { SmallLoading } from "@/components/LoadingStates";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,6 +21,13 @@ import {
   Clock 
 } from "lucide-react";
 import Header from "@/components/Header";
+
+const LazyLessonContent = lazy(() =>
+  import('@/components/lesson/LessonContent').then(m => ({ default: m.LessonContent }))
+);
+const LazyLessonDiscussion = lazy(() =>
+  import('@/components/discussion/LessonDiscussion').then(m => ({ default: m.LessonDiscussion }))
+);
 
 const LessonView = () => {
   const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>();
@@ -111,6 +118,12 @@ const LessonView = () => {
   };
 
   const courseProgress = (completedLessons.length / course.lessons.length) * 100;
+
+  const { virtualItems, totalSize, scrollElement } = useVirtualization({
+    itemHeight: 96,
+    containerHeight: 600,
+    data: course.lessons,
+  });
 
   // Discussion handlers
   const handleQuestionSubmit = async (questionData: {
@@ -235,11 +248,15 @@ const LessonView = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {/* Lesson Content Tab */}
           <TabsContent value="content" className="mt-0">
-            <LessonContent 
-              lesson={lesson}
-              onVideoProgress={handleVideoProgress}
-              onVideoComplete={handleVideoComplete}
-            />
+            {activeTab === 'content' && (
+              <Suspense fallback={<SmallLoading />}>
+                <LazyLessonContent 
+                  lesson={lesson}
+                  onVideoProgress={handleVideoProgress}
+                  onVideoComplete={handleVideoComplete}
+                />
+              </Suspense>
+            )}
           </TabsContent>
 
           {/* Lessons List Tab (Mobile Sidebar Alternative) */}
@@ -252,79 +269,84 @@ const LessonView = () => {
                 </p>
               </div>
               
-              <div className="space-y-3">
-                {course.lessons.map((lessonItem, index) => {
-                  const isCompleted = completedLessons.includes(lessonItem.id);
-                  const isCurrent = lessonItem.id === lesson.id;
-                  const canAccess = index === 0 || completedLessons.includes(course.lessons[index - 1].id);
-                  
-                  const MobileLessonCard = () => (
-                    <Card className={`border-0 shadow-card ${isCurrent ? 'ring-2 ring-primary' : ''}`}>
-                      <CardContent className="p-4">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                            isCompleted 
-                              ? 'bg-green-500 text-white' 
-                              : isCurrent
-                                ? 'bg-primary text-white'
-                                : canAccess
-                                  ? 'bg-muted text-muted-foreground'
-                                  : 'bg-muted/50 text-muted-foreground/50'
-                          }`}>
-                            {isCompleted ? (
-                              <CheckCircle className="w-5 h-5" />
-                            ) : !canAccess ? (
-                              <Lock className="w-4 h-4" />
-                            ) : (
-                              <span className="font-bold text-sm">{index + 1}</span>
+              <div ref={scrollElement} className="relative overflow-auto h-[60vh]">
+                <div style={{ height: totalSize, position: 'relative' }}>
+                  {virtualItems.map(({ index, start }) => {
+                    const lessonItem = course.lessons[index];
+                    const isCompleted = completedLessons.includes(lessonItem.id);
+                    const isCurrent = lessonItem.id === lesson.id;
+                    const canAccess = index === 0 || completedLessons.includes(course.lessons[index - 1].id);
+
+                    const card = (
+                      <Card className={`border-0 shadow-card ${isCurrent ? 'ring-2 ring-primary' : ''}`}>
+                        <CardContent className="p-4">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                              isCompleted 
+                                ? 'bg-green-500 text-white' 
+                                : isCurrent
+                                  ? 'bg-primary text-white'
+                                  : canAccess
+                                    ? 'bg-muted text-muted-foreground'
+                                    : 'bg-muted/50 text-muted-foreground/50'
+                            }`}>
+                              {isCompleted ? (
+                                <CheckCircle className="w-5 h-5" />
+                              ) : !canAccess ? (
+                                <Lock className="w-4 h-4" />
+                              ) : (
+                                <span className="font-bold text-sm">{index + 1}</span>
+                              )}
+                            </div>
+                            
+                            <div className="flex-1">
+                              <h4 className={`font-medium font-cairo mb-1 ${canAccess ? '' : 'text-muted-foreground/50'}`}>
+                                {lessonItem.title}
+                              </h4>
+                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <Clock className="w-3 h-3" />
+                                <span className="font-cairo">{lessonItem.duration} دقيقة</span>
+                                {isCurrent && <Badge variant="secondary" className="font-cairo">الحالي</Badge>}
+                              </div>
+                            </div>
+                            
+                            {canAccess && !isCurrent && (
+                              <PlayCircle className="w-5 h-5 text-primary" />
                             )}
                           </div>
-                          
-                          <div className="flex-1">
-                            <h4 className={`font-medium font-cairo mb-1 ${
-                              canAccess ? '' : 'text-muted-foreground/50'
-                            }`}>
-                              {lessonItem.title}
-                            </h4>
-                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                              <Clock className="w-3 h-3" />
-                              <span className="font-cairo">{lessonItem.duration} دقيقة</span>
-                              {isCurrent && <Badge variant="secondary" className="font-cairo">الحالي</Badge>}
-                            </div>
-                          </div>
-                          
-                          {canAccess && !isCurrent && (
-                            <PlayCircle className="w-5 h-5 text-primary" />
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  );
+                        </CardContent>
+                      </Card>
+                    );
 
-                  if (!canAccess || isCurrent) {
-                    return <MobileLessonCard key={lessonItem.id} />;
-                  }
+                    const content = (!canAccess || isCurrent)
+                      ? card
+                      : (<Link to={`/course/${courseId}/lesson/${lessonItem.id}`}>{card}</Link>);
 
-                  return (
-                    <Link key={lessonItem.id} to={`/course/${courseId}/lesson/${lessonItem.id}`}>
-                      <MobileLessonCard />
-                    </Link>
-                  );
-                })}
+                    return (
+                      <div key={lessonItem.id} style={{ position: 'absolute', top: `${start}px`, left: 0, right: 0 }}>
+                        {content}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </TabsContent>
 
           {/* Discussion Tab */}
           <TabsContent value="discussion" className="mt-0">
-            <LessonDiscussion
-              lessonId={lessonId!}
-              courseId={courseId!}
-              questions={mockQuestions}
-              onQuestionSubmit={handleQuestionSubmit}
-              onQuestionClick={handleQuestionClick}
-              onVote={handleVote}
-            />
+            {activeTab === 'discussion' && (
+              <Suspense fallback={<SmallLoading />}>
+                <LazyLessonDiscussion
+                  lessonId={lessonId!}
+                  courseId={courseId!}
+                  questions={mockQuestions}
+                  onQuestionSubmit={handleQuestionSubmit}
+                  onQuestionClick={handleQuestionClick}
+                  onVote={handleVote}
+                />
+              </Suspense>
+            )}
           </TabsContent>
         </Tabs>
       </div>
