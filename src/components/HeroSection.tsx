@@ -96,11 +96,11 @@ const HeroSection = () => {
                       <Users className="w-8 h-8 lg:w-12 lg:h-12 text-white" />
                     </div>
                     <div className="text-right">
-                      <div className="text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white mb-1 font-cairo">500+</div>
+                      <div className="text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white mb-1 font-cairo">26000</div>
                       <div className="w-12 h-1 lg:w-20 lg:h-2 bg-gradient-to-r from-primary to-accent rounded-full ml-auto"></div>
                     </div>
                   </div>
-                  <h3 className="text-xl lg:text-3xl font-bold text-white mb-2 lg:mb-4 font-cairo">متدرب نجح معنا</h3>
+                  <h3 className="text-xl lg:text-3xl font-bold text-white mb-2 lg:mb-4 font-cairo">متدرب تخرجوا من المركز</h3>
                   <p className="text-white/80 text-sm lg:text-lg font-cairo leading-relaxed">خريجون متميزون في مختلف المجالات التدريبية والمهنية</p>
                 </div>
               </div>
@@ -114,12 +114,12 @@ const HeroSection = () => {
                       <BookOpen className="w-8 h-8 lg:w-12 lg:h-12 text-white" />
                     </div>
                     <div className="text-right">
-                      <div className="text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white mb-1 font-cairo">50+</div>
+                      <div className="text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white mb-1 font-cairo">120+</div>
                       <div className="w-12 h-1 lg:w-20 lg:h-2 bg-gradient-to-r from-secondary to-info rounded-full ml-auto"></div>
                     </div>
                   </div>
                   <h3 className="text-xl lg:text-3xl font-bold text-white mb-2 lg:mb-4 font-cairo">دورة تدريبية</h3>
-                  <p className="text-white/80 text-sm lg:text-lg font-cairo leading-relaxed">برامج تدريبية معتمدة ومتطورة في جميع التخصصات</p>
+                  <p className="text-white/80 text-sm lg:text-lg font-cairo leading-relaxed">أكثر من ١٢٠ دورة تدريبية في مختلف الدورات</p>
                 </div>
               </div>
 
@@ -132,7 +132,7 @@ const HeroSection = () => {
                       <Award className="w-8 h-8 lg:w-12 lg:h-12 text-white" />
                     </div>
                     <div className="text-right">
-                      <div className="text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white mb-1 font-cairo">5+</div>
+                      <div className="text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-white mb-1 font-cairo">10</div>
                       <div className="w-12 h-1 lg:w-20 lg:h-2 bg-gradient-to-r from-success to-accent rounded-full ml-auto"></div>
                     </div>
                   </div>

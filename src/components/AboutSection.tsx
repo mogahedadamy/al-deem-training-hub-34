@@ -26,8 +26,8 @@ const AboutSection = () => {
   const achievements = [
     {
       icon: CheckCircle,
-      text: "أكثر من 500 متدرب تم تأهيلهم بنجاح",
-      highlight: "500 متدرب"
+      text: "أكثر من 26000 متدرب تخرجوا من المركز",
+      highlight: "26000 متدرب"
     },
     {
       icon: Trophy,
@@ -66,7 +66,7 @@ const AboutSection = () => {
             مركز العميد للتدريب المتقدم
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto animate-fade-in leading-relaxed font-cairo px-4" style={{ animationDelay: "0.2s" }}>
-            مؤسسة تدريبية رائدة مسجلة ومعتمدة تحت رقم 1016 تسعى لتقديم أفضل البرامج التدريبية المتخصصة في التطوير الإداري والقيادي والتثقيفي
+            مؤسسة تدريبية رائدة مسجلة ومعتمدة تحت رقم 116313 تسعى لتقديم أفضل البرامج التدريبية المتخصصة في التطوير الإداري والقيادي والتثقيفي
           </p>
           
           {/* صور أنشطة المركز */}
